@@ -3,6 +3,7 @@ from flask import Flask,render_template, request,url_for,redirect
 from .models import *
 from flask import current_app as app
 from sqlalchemy import or_, and_, not_
+from datetime import date, timedelta
 
 @app.route("/")
 def home():
@@ -108,6 +109,38 @@ def doc_details(name,doc_id,d_id):
     dept=Department.query.filter(Department.id==d_id).first()
     return render_template("user_doc_details.html",usern=name,doctor=doc,dept_id=d_id,department=dept)
 
+@app.route("/doctor_availability", methods=["GET", "POST"])
+def doctor_availability():
+    doctor_id = 1  # (example, get from session after login)
+
+    if request.method == "POST":
+        # Get data from form (dict like {"2025-01-21_morning": "on"})
+        selected_slots = request.form
+
+        # Clear old data for that doctor for next 7 days
+        Availability.query.filter_by(doctor_id=doctor_id).delete()
+
+        today = date.today()
+        for i in range(7):
+            day = today + timedelta(days=i)
+            for period in ["morning", "evening"]:
+                key = f"{day}_{period}"
+                is_available = key in selected_slots  # checkbox checked
+                new_slot = Availability(
+                    doctor_id=doctor_id,
+                    date=day,
+                    time_slot=period,
+                    is_booked="no" if is_available else "yes"
+                )
+                db.session.add(new_slot)
+
+        db.session.commit()
+        return render_template("doct_availability.html")
+
+    # GET: Show next 7 days
+    today = date.today()
+    week_days = [(today + timedelta(days=i)) for i in range(7)]
+    return render_template("doct_availability.html", week_days=week_days)
 
 # @app.route("/user_history/<id>/<department>")
 # def user_history(pid,department):

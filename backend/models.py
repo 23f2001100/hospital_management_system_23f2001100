@@ -10,6 +10,7 @@ class User_Info(db.Model):
     email=db.Column(db.String,unique=True,nullable=False)
     password=db.Column(db.String,nullable=False)
     role=db.Column(db.Integer,default=1)
+    is_blacklist=db.Column(db.Integer,default=0)
     appointments=db.relationship("Appointments",cascade="all,delete",backref="user_info",lazy=True)
 
 #second
@@ -30,6 +31,7 @@ class Doctor_Info(db.Model):
     dept_id=db.Column(db.String,db.ForeignKey("department.id"),nullable=False)
     experience=db.Column(db.Integer,nullable=False)
     bio=db.Column(db.String,nullable=False)
+    is_blacklist=db.Column(db.Integer,default=0)
     appointments=db.relationship("Appointments",cascade="all,delete",backref="doctor_info",lazy=True)
     availability=db.relationship("Availability",cascade="all,delete",backref="doctor_info",lazy=True)
 
