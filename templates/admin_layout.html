@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body style="background-image: url('/static/image/4950247_19834.svg');">
+    <header>
+        <div>
+            <h1 class="wel"  style="background-color: rgb(90,24,154);"><i><b>Welcome! {{usern}}</b></i></h1>
+        </div>
+        <nav class="nav" style="background-color: rgba(224, 170, 225, 0.3); border-color: rgba(199,125,225);">
+            <a class="nav_a" href="{{url_for('admin_dashboard',name=usern)}}" style="margin-left: 3%;">Home</a>
+            <a class="nav_a" href="{{url_for('admin_department')}}">Available Departments</a>
+            <a class="nav_a" href="/login">Logout</a>
+            <span class="nav_a" style="position: absolute; right: 10px;">
+                <form action="#" method="POST">
+                    <input type="text" id="search" name="search" placeholder="Search here!">
+                    <button type="submit">Search</button>
+                </form>
+            </span>
+        
+        </nav>
+    </header>
+    {%block content%}
+
+    {%endblock%}
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+{%extends "admin_layout.html"%}
+{%block content%}
+    <div class="login_panel" style="border-color: rgb(123, 44, 191);">
+        <h1 style="text-align: center; font-weight: bold; border: 2px solid rgb(123,44,191); background-color: rgb(60,9,108); color: white; border-radius: 3px; padding: 5px; ">Patient History</h1>
+        <br>
+        {%for patient in patient_list%}
+        {%if patient.id==p_id}
+        <pre style="margin: 5%; font-size: x-large;">           
+Patients Name: {{appointment.patient_info.user_info.full_name}}
+Doctor's Name: {{appointment.}}
+Department: #
+        </pre>
+        <div class="login_panel" style="width: 90%; margin-left: 5%; border: 2px solid rgb(123,44,191)">
+            <table class="table_user_dashboard" style="margin: 5px;">
+                <thead style="margin: 10px;">
+                    <th>Visit no.</th>
+                    <th>Visit Type</th>
+                    <th>Test Done</th>
+                    <th>Diagnosis</th>
+                    <th>Prescription</th>
+                    <th>Medicines</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>120</td>
+                        <td>xxx</td>
+                        <td>uk00</td>
+                        <td>12min</td>
+                        <td>take rest</td>
+                        <td>paractamol</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <div>
+            <button style="font-size: large; padding: 20px; margin: 3% 20% 10% 20%;"><a href="/admin_dashboard" >Cancel</a></button>
+        </div>
+    </div>
+{%endblock%}

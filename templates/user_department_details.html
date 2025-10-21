@@ -1,0 +1,32 @@
+{%extends "user_layout.html"%}
+{%block content%}
+    <!-- <div><a href="{{url_for('user_dashboard',name=usern)}}" type="button" style="color: lime; padding: 80% 0% 10% 90%; right: 10px;">Go back</a></div> -->
+    <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(0, 180, 216);padding: 3px; color: rgb(0,119,182); border-radius: 5px; ">Overview</h2>
+    <div class="login_panel" style="width: 80%; margin-left: 10%;">
+        {%if department%}
+        <h2 style="font-weight: 300;">{{department.description}}</h2>
+    </div>
+    <br>
+    <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(0, 180, 216);padding: 3px; color: rgb(0,119,182); border-radius: 5px; ">Doctor's list</h2>
+    <div class="login_panel" style="width: 80%; margin-left: 10%;">
+        <table class="table_user_dashboard">
+            <thead style="margin: 10px;">
+                <th>ID</th>
+                <th>Doctor Name</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+                {%for doctor in doctor_list%}
+                <tr>
+                    <td>{{doctor.id}}</td>
+                    <td>{{doctor.full_name}}</td>
+                    <td><a href="#">Check Availability  |  </a><a href="{{url_for('doc_details',name=usern,doc_id=doctor.id,d_id=department.id)}}">View Details</a></td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    {%else%}
+    <h3>---Not Available---</h3>
+    {%endif%}
+{%endblock%}

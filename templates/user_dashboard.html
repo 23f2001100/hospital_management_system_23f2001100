@@ -1,0 +1,53 @@
+{%extends "user_layout.html"%}
+{%block content%}
+    <h1 style="text-align: center; font-weight: bold; padding: 3px; color: rgb(23, 26, 209);">User Dashboard</h1>
+    <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(0, 180, 216);padding: 3px; color: rgb(0,119,182); border-radius: 5px; ">Departments</h2>
+    {%if department_list%}
+    <div class="login_panel" style="width: 80%; margin-left: 10%;">
+        <table class="table_user_dashboard">
+            <thead style="margin: 10px;">
+                <th>ID</th>
+                <th>Department</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+                {%for dept in department_list%}
+                <tr>
+                    <td>{{dept.id}}</td>
+                    <td>{{dept.specialization}}</td>
+                    <td><a href="{{url_for('department_details',name=usern,d_id=dept.id)}}" type="button">View Details</a></td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+        {%else%}
+        <h3>---Not Available---</h3>
+        {%endif%}
+    </div>
+    <br>
+    <hr style="border: 1px solid rgb(123,44,191); width: 100%; margin: 0px;">
+    <br>
+    <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(0, 180, 216); color: rgb(0,119,182); border-radius: 3px; padding: 5px; ">Upcoming Appointments</h2>
+    <div class="login_panel" style="margin-bottom: 50px;">
+        <table class="table_user_dashboard">
+            <thead style="margin: 10px;">
+                <th>ID</th>
+                <th>Doctor Name</th>
+                <th>Department</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Action </th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>120</td>
+                    <td>xxx</td>
+                    <td></td>
+                    <td></td>
+                    <td>12</td>
+                    <td><a href="#">Cancel</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{%endblock%}

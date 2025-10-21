@@ -1,0 +1,57 @@
+{%extends "doctor_layout.html"%}
+{%block content%}
+    <h1 style="text-align: center; font-weight: bold; padding: 3px; color: rgb(0, 150, 136);">Doctor Dashboard</h1>
+    <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(76, 175, 80);padding: 3px; color: rgb(0, 150, 136); border-radius: 5px; ">Upcoming Appointments</h2>
+    {%if appointments_list%}
+    <div class="login_panel" style="width: 80%; margin-left: 10%; border: 2px solid rgb(76, 175, 80)">
+        <table class="table_user_dashboard">
+            <thead style="margin: 10px;">
+                <th>ID</th>
+                <th>Patient Name</th>
+                <th>Patient History</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+                {%for ap in appointments_list%}
+                <tr>
+                    <td>{{ap.user_id}}</td>
+                    <td>{{ap.doctor_info.full_name}}</td>
+                    <td><a href="/doct_update_patient_hist">Update</a></td>
+                    <td><button><a href="user_relased_spot.html">Mark as complete</a></button><button><a href="user_relased_spot.html">Cancel</a></button></td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+        {%else%}
+        <h3>---No Upcoming Appointments are available---</h3>
+        {%endif%}
+    </div>
+    <hr style="border: 1px solid black; width: 100%; margin: 0px;">
+    <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(76, 175, 80);padding: 3px; color: rgb(0, 150, 136); border-radius: 5px; ">Assigned Patients</h2>
+    {%if appointments_list%} 
+    <div class="login_panel" style="width: 80%; margin-left: 10%; border: 2px solid rgb(76, 175, 80)">
+        <table class="table_user_dashboard">
+            <thead style="margin: 10px;">
+                <th>ID</th>
+                <th>Patient Name</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+                {%for ap in appointments_list%}
+                <tr>
+                    <td>{{ap.user_id}}</td>
+                    <td>{{ap.user_info.full_name}}</td>
+                    <td><a href="#" type="button">View</a></td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+        {%else%}
+        <h3>---No Upcoming Appointments are available---</h3>
+        {%endif%}
+    </div>
+    <span style="font-size: x-large; background-color: lightgreen; color: white; right: 5%; bottom: 10%;">
+        <a href="#" type="button">Provide Availability</a>
+    </span>
+
+{%endblock%}

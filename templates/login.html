@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <!--{{ url_for('static', filename='style.css') }} | /static/style.css-->
+</head>
+<body>
+    <div>
+        <h1 class="wel"><i><b>Welcome! User</b></i></h1>
+    </div>
+    <div style="text-align: center;"><h1 style="color:red; display: inline;">Hospital Management App</h1></div>
+    <br>
+    <div class="login_panel">
+        <p style="text-align: center; font-size: 50px; margin-bottom: 10px; color: rgb(123, 6, 123);"><b>Login</b></p>
+        <br>
+        <form action="/login" class="form_style" method="POST">
+            <label for="email"  style=" margin-bottom: 1%; font-size:x-large; display: block;">UserID(E-Mail):</label>
+            <input type="email" id="email" name="email" class="input_form" placeholder="Enter your email id">
+
+            <label for="password"  style=" margin-bottom: 1%; font-size:x-large; display: block;">Password:</label>
+            <input type="password" id="password" name="password" class="input_form" placeholder="Enter your password">
+
+            <br>
+            <a href="/signup" style="display: block; text-decoration: none; font-size: x-large;">New User ?</a>
+            <button class="Centre_button" type="submit" >Submit</button>
+            <div class="pop_up_message">{{pop_up}}</div>
+        </form>
+    </div>
+</body>
+</html>

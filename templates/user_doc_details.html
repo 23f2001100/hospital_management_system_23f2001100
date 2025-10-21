@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Details</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body style="background-image: url('/static/image/4950247_19834.svg');">
+    <div class="login_panel" style="width: 60%; margin-left: 20%; margin-top: 10%;">
+        <pre style="font-size: x-large; margin-left: 10%;">
+<b>{{doctor.full_name}}</b>
+Department - {{doctor.department.specialization}}
+{{doctor.experience}} years Experience overall
+
+{{doctor.bio}}
+
+
+        </pre>
+        <div>
+            <a href="#" type="button" class="Centre_button">Check availability</a>
+            <a href="{{url_for('department_details',name=usern,d_id=dept_id)}}" type="button" class="Centre_button">Go back</a>
+        </div>
+    </div>
+
+</body>
+</html>

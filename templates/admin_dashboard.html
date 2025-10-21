@@ -1,0 +1,87 @@
+{%extends "admin_layout.html"%}
+{%block content%}
+    <h1 style="text-align: center; font-weight: bold; padding: 3px; color: rgba(60,9,108,0.9);">Admin Dashboard</h1>
+    <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(123,44,191);padding: 3px; color: rgb(90,24,154); border-radius: 5px; ">Detail Of Doctors</h2>
+    <div class="login_panel" style="width: 80%; margin-left: 10%; border: 2px solid rgb(123,44,191)">
+        {%if doctor_list%}
+        <table class="table_user_dashboard">
+            <thead style="margin: 10px;">
+                <th>ID</th>
+                <th>Doctor Name</th>
+                <th>Specialization</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+                {%for doctor in doctor_list%}
+                <tr>
+                    <td>{{doctor.id}}</td>
+                    <td>{{doctor.full_name}}</td>
+                    <td>{{doctor.department.specialization}}</td>
+                    <td><button><a href="user_relased_spot.html">Edit</a></button><button><a href="user_relased_spot.html">Delete</a></button><button><a href="user_relased_spot.html">Blacklist</a></button></td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+        {%else%}
+        <h3>---No doctor are added---</h3>
+        {%endif%}
+        <a href="{{ url_for('admin_add_doctor') }}" class="Centre_button" type="button" style="background-color: rgb(90,24,154);">+Add Doctor</a>
+    </div>
+    <div class="pop_up_message">{{pop_up}}</div>
+    <br>
+    <hr style="border: 1px solid black; width: 100%; margin: 0px;">
+    <br>
+    <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(123,44,191); color: rgb(90,24,154); border-radius: 3px; padding: 5px; ">Patient Details</h2>
+
+    <div class="login_panel" style="width: 60%; margin-left: 20%; border: 2px solid rgb(123,44,191)">
+        {%if patient_list%}
+        <table class="table_user_dashboard">
+            <thead style="margin: 10px;">
+                <th>ID</th>
+                <th>Name</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+                {%for user in patient_list%}
+                <tr>
+                    <td>{{user.id}}</td>
+                    <td>{{user.full_name}}</td>
+                    <td><button><a href="user_relased_spot.html">Edit</a></button><button><a href="user_relased_spot.html">Delete</a></button><button><a href="user_relased_spot.html">Blacklist</a></button></td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+        {%else%}
+        <h3>---No Patient are available---</h3>
+        {%endif%}
+    </div>
+    <br>
+    <hr style="border: 1px solid black; width: 100%; margin: 0px;">
+    <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(123,44,191);padding: 3px; color: rgb(90,24,154); border-radius: 5px; ">Upcoming Appointments</h2>
+    <div class="login_panel" style="width: 80%; margin-left: 10%; border: 2px solid rgb(123,44,191)">
+        {%if appointments%}
+        <table class="table_user_dashboard">
+            <thead style="margin: 10px;">
+                <th>App_ID</th>
+                <th>Pateint Name</th>
+                <th>Doctor Name</th>
+                <th>Specialization</th>
+                <th>Patient History</th>
+            </thead>
+            <tbody>
+                {%for appointment in appointments_list%}
+                <tr>
+                    <td>{{appointment.id}}</td>
+                    <td>{{appointment.user_info.full_name}}</td>
+                    <td>{{appointment.doctor_id}}</td>
+                    <td>{{appointment.doctor_info.specialization}}</td>
+                    <td><a href="/user_history" type="button" style="background-color: rgb(90,24,154);">View</a></td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+        {%else%}
+        <h3>No Appointments are Available</h3>
+        {%endif%}
+    </div>
+{%endblock%}

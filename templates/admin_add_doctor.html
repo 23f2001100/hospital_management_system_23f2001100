@@ -1,0 +1,53 @@
+{%extends "admin_layout.html"%}
+{%block content%}
+    <div class="login_panel" style="border-color: rgb(123, 44, 191);">
+        <h1 style="text-align: center; font-weight: bold; border: 2px solid rgb(123,44,191); background-color: rgb(60,9,108); color: white; border-radius: 3px; padding: 5px; ">Add Doctor</h1>
+        <br>
+        <form action="/add_doctor" method="POST" class="form_style">
+            <table>
+                <tr>
+                    <td><label for="full_name"  style=" margin-bottom: 1%; font-size:x-large;">Name:</label></td>
+                    <td><input type="text" id="full_name" name="full_name" class="input_form" placeholder="Enter fullname"></td>
+                </tr>
+                
+                <tr>
+                    <td><label for="email"  style=" margin-bottom: 1%; font-size:x-large;">UserID(E-Mail):</label></td>
+                    <td><input type="email" id="email" name="email" class="input_form" placeholder="Enter email_id"></td>
+                </tr>
+                <tr>
+                    <td><label for="password"  style=" margin-bottom: 1%; font-size:x-large;">Password:</label></td>
+                    <td><input type="password" id="password" name="password" class="input_form" placeholder="Enter Password"></td>
+                </tr>
+                
+                <tr>
+                    <td><label for="specialization_id"  style=" margin-bottom: 1%; font-size:x-large;">Specialization:</label></td>
+                    <td>
+                        <select id="specialization_id" name="specialization_id" class="input_form">
+                            {%for dept in department_list%}
+                            <option value="{{dept.id}}">{{dept.specialization}}</option>
+                            {%endfor%}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="experience"  style=" margin-bottom: 1%; font-size:x-large;">Experience(years):</label></td>
+                    <td><input type="number" id="experience" name="experience" class="input_form" placeholder="Enter experience"></td>
+                </tr>
+                
+                <tr>
+                    <td><label for="bio"  style=" margin-bottom: 1%; font-size:x-large;">Bio:</label></td>
+                    <td><textarea type="text" id="bio" name="bio" class="input_form"></textarea></td>
+                    
+                </tr>
+                
+            </table>
+            <br>
+            <div>
+                <a href="{{url_for('admin_dashboard',name=usern)}}" class="Centre_button" type="button" style="background-color: rgb(90,24,154);">Cancel</a>
+                <button type="submit" style="font-size: large; padding: 20px; margin: 3% 0% 10% 0%;">Add</button>
+            </div>
+        </form>
+        <div class="pop_up_message">{{pop_up}}</div>
+    </div>
+    
+{%endblock%}

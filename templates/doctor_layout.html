@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body style="background-image: url('https://t3.ftcdn.net/jpg/01/67/15/98/360_F_167159846_MCrwVzB7ysdZKr2vIiJkiCacEoNWagdn.jpg');">
+    <header>
+        <div>
+            <h1 class="wel" style="background-color:rgb(76, 175, 80);"><i><b>Welcome! {{usern}}</b></i></h1>
+        </div>
+        <nav class="nav" style="background-color: rgba(76, 175, 80, 0.1); border-color: rgb(76, 175, 80);">
+            <a class="nav_a" href="{{url_for('doctor_dashboard',name=usern,d_id=doct_id)}}" style="margin-left: 3%;">Home</a>
+            <a class="nav_a" href="/login">Logout</a>
+        
+        </nav>
+    </header>
+    {%block content%}
+
+    {%endblock%}
+
+</body>
+</html>
