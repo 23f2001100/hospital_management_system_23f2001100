@@ -109,33 +109,32 @@ def doc_details(name,doc_id,d_id):
     dept=Department.query.filter(Department.id==d_id).first()
     return render_template("user_doc_details.html",usern=name,doctor=doc,dept_id=d_id,department=dept)
 
-@app.route("/doctor_availability", methods=["GET", "POST"])
-def doctor_availability():
-    doctor_id = 1  # (example, get from session after login)
-
+@app.route("/doctor_availability/<doc_id>", methods=["GET", "POST"])
+def doctor_availability(doc_id):
+    print("------------------------------",doc_id,"---")
+    doctor_id=doc_id
+    
     if request.method == "POST":
-        # Get data from form (dict like {"2025-01-21_morning": "on"})
         selected_slots = request.form
-
-        # Clear old data for that doctor for next 7 days
         Availability.query.filter_by(doctor_id=doctor_id).delete()
-
         today = date.today()
         for i in range(7):
             day = today + timedelta(days=i)
             for period in ["morning", "evening"]:
                 key = f"{day}_{period}"
-                is_available = key in selected_slots  # checkbox checked
+                is_available = key in selected_slots
                 new_slot = Availability(
-                    doctor_id=doctor_id,
+                    doctor_id=int(doc_id),
                     date=day,
                     time_slot=period,
-                    is_booked="no" if is_available else "yes"
+                    is_booked=False if is_available else True
                 )
                 db.session.add(new_slot)
-
+        print("----------------------------------------------------.,",new_slot,"---------------")
         db.session.commit()
-        return render_template("doct_availability.html")
+        doc=Doctor_Info.query.filter_by(id=doctor_id).first()
+        doc_name=doc.full_name
+        return redirect(url_for("doctor_dashboard",name=doc_name,d_id=doctor_id))
 
     # GET: Show next 7 days
     today = date.today()

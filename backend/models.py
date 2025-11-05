@@ -53,8 +53,8 @@ class Availability(db.Model):
     id=db.Column(db.Integer,primary_key=True,nullable=False)
     doctor_id=db.Column(db.Integer,db.ForeignKey("doctor_info.id"),nullable=False)
     date=db.Column(db.Date,nullable=False)
-    time_slot=db.Column(db.Time,nullable=False)
-    is_booked=db.Column(db.String,nullable=False)
+    time_slot=db.Column(db.String,nullable=False)
+    is_booked=db.Column(db.Boolean,nullable=False)
     
     # python
     # from backend.models import db
