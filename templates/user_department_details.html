@@ -20,7 +20,7 @@
                 <tr>
                     <td>{{doctor.id}}</td>
                     <td>{{doctor.full_name}}</td>
-                    <td><a href="#">Check Availability  |  </a><a href="{{url_for('doc_details',name=usern,doc_id=doctor.id,d_id=department.id)}}">View Details</a></td>
+                    <td><a href="{{url_for('appointment',doc_id=doctor.id,user_id=usern)}}">Check Availability  |  </a><a href="{{url_for('doc_details',name=usern,doc_id=doctor.id,d_id=department.id)}}">View Details</a></td>
                 </tr>
                 {%endfor%}
             </tbody>

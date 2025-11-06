@@ -2,7 +2,7 @@
 {%block content%}
     <div class="login_panel" style="border-color: rgb(76, 175, 80);">
         <h1 style="text-align: center; font-weight: bold; background-color: rgb(76, 175, 80); color: white; border-radius: 3px; padding: 5px; ">Upcoming 7-day Availability</h1>
-        <form action="/doctor_availability/{{doct_id}}" method="POST" class="form_style">
+        <form action="{{ url_for('doct_availability', doc_id=doct_id) }}" method="POST" class="form_style">
             <table class="table_user_dashboard">
                 <thead style="margin: 10px;">
                     <th>Date</th>
@@ -14,11 +14,11 @@
                     <tr>
                         <td>{{ day.strftime('%d/%m/%Y') }}</td>
                         <td>
-                            <input type="checkbox" name="{{day}}_morning" checked>
+                            <input type="checkbox" name="{{day}}_morning" >
                             08:00 - 12:00 am
                         </td>
                         <td>
-                            <input type="checkbox" name="{{day}}_evening" checked>
+                            <input type="checkbox" name="{{day}}_evening" >
                             04:00 - 09:00 pm
                         </td>
                     </tr>

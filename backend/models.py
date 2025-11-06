@@ -41,10 +41,11 @@ class Appointments(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     user_id=db.Column(db.Integer,db.ForeignKey("user_info.id"),nullable=False)
     doctor_id=db.Column(db.Integer,db.ForeignKey("doctor_info.id"),nullable=False)
-    date_time=db.Column(db.Integer,nullable=False)
-    status=db.Column (db.String,nullable=False)
-    diagnosis=db.Column(db.String,nullable=False)
-    prescription=db.Column(db.String,nullable=False)
+    date=db.Column(db.Date,nullable=False)
+    time_slot=db.Column(db.String,nullable=False)
+    status=db.Column (db.String,nullable=False,default="Incomplete")
+    diagnosis=db.Column(db.String,nullable=True)
+    prescription=db.Column(db.String,nullable=True)
     test_done=db.Column(db.String,nullable=True)
 
 
@@ -54,7 +55,7 @@ class Availability(db.Model):
     doctor_id=db.Column(db.Integer,db.ForeignKey("doctor_info.id"),nullable=False)
     date=db.Column(db.Date,nullable=False)
     time_slot=db.Column(db.String,nullable=False)
-    is_booked=db.Column(db.Boolean,nullable=False)
+    is_present=db.Column(db.Boolean,nullable=False)
     
     # python
     # from backend.models import db

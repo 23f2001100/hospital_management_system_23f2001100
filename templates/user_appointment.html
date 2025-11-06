@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Availability Details</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body style="background-image: url('/static/image/4950247_19834.svg');">
+    <div class="login_panel" style="width: 60%; margin-left: 20%; margin-top: 10%;">
+        <form action="{{url_for('appointment',doc_id=doc_id,user_id=user_id)}}" method="POST" class="form_style">
+            <table class="table_user_dashboard">
+                <thead style="margin: 10px;">
+                    <th>Date</th>
+                    <th>Morning</th>
+                    <th>Evening</th>
+                </thead>
+                <tbody>
+                    {%for appion in avail_list %}
+                    <tr>
+                        {%if appion.time_slot=="morning"%}
+                        <td>{{ day.strftime('%d/%m/%Y') }}</td>
+                        <td>
+                            {%if appion.is_present==0%}
+                            <input type="checkbox" name="{{day}}_morning" disabled>
+                            <p style="color: orangered;">08:00 - 12:00 am</p>
+                            {%else%}
+                            <input type="checkbox" name="{{day}}_morning" >
+                            <p style="color: rgb(23, 114, 23);">08:00 - 12:00 am</p>
+                            {%endif%}
+                        </td>
+                        {%elif appion.time_slot=="evening"%}
+                        <td>
+                            {%if appion.is_present==0%}
+                            <input type="checkbox" name="{{day}}_evening" disabled>
+                            <p style="color: orangered;">04:00 - 09:00 pm</p>
+                            {%else%}
+                            <input type="checkbox" name="{{day}}_evening" >
+                            <p style="color: rgb(23, 114, 23);">04:00 - 09:00 pm</p>
+                            {%endif%}
+                        </td>
+                        {%endif%}
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                
+            </table>
+            <button type="submit" style="font-size: large; padding: 20px; margin: 3% 0% 10% 0%;">Save</button>
+        </form>
+    </div>
+</body>
+</html>

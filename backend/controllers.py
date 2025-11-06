@@ -109,11 +109,11 @@ def doc_details(name,doc_id,d_id):
     dept=Department.query.filter(Department.id==d_id).first()
     return render_template("user_doc_details.html",usern=name,doctor=doc,dept_id=d_id,department=dept)
 
-@app.route("/doctor_availability/<doc_id>", methods=["GET", "POST"])
-def doctor_availability(doc_id):
-    print("------------------------------",doc_id,"---")
+@app.route("/doct_availability/<doc_id>", methods=["GET", "POST"])
+def doct_availability(doc_id):
     doctor_id=doc_id
-    
+    doc=Doctor_Info.query.filter_by(id=doctor_id).first()
+    doc_name=doc.full_name
     if request.method == "POST":
         selected_slots = request.form
         Availability.query.filter_by(doctor_id=doctor_id).delete()
@@ -124,22 +124,24 @@ def doctor_availability(doc_id):
                 key = f"{day}_{period}"
                 is_available = key in selected_slots
                 new_slot = Availability(
-                    doctor_id=int(doc_id),
+                    doctor_id=doc_id,
                     date=day,
                     time_slot=period,
-                    is_booked=False if is_available else True
+                    is_present=True if is_available else False
                 )
                 db.session.add(new_slot)
-        print("----------------------------------------------------.,",new_slot,"---------------")
         db.session.commit()
-        doc=Doctor_Info.query.filter_by(id=doctor_id).first()
-        doc_name=doc.full_name
         return redirect(url_for("doctor_dashboard",name=doc_name,d_id=doctor_id))
-
-    # GET: Show next 7 days
+    #Show next 7 days
     today = date.today()
     week_days = [(today + timedelta(days=i)) for i in range(7)]
-    return render_template("doct_availability.html", week_days=week_days)
+    return render_template("doct_availability.html", week_days=week_days,doct_id=doctor_id)
+
+@app.route("/appointment_form/<doc_id>/<user_id>")
+def appointment_form(doc_id,user_id):
+    print("-----------------",request.method,"----------")
+    avail_list=Availability.query.filter_by(doctor_id=doc_id).all()
+    return render_template("appointment.html",avail_list=avail_list,doc_id=doc_id,user_id=user_id)
 
 # @app.route("/user_history/<id>/<department>")
 # def user_history(pid,department):
