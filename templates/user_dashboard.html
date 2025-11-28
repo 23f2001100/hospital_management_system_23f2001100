@@ -1,5 +1,11 @@
 {%extends "user_layout.html"%}
 {%block content%}
+            <span class="nav_a" style="position: absolute; right: 10px;">
+                <form action="/user_dashboard_search_bar/{{u_id}}" method="POST">
+                    <input type="text" id="search_by_name" name="search_by_name" placeholder="Search here!.....">
+                    <button type="submit">Search</button>
+                </form>
+            </span>
     <h1 style="text-align: center; font-weight: bold; padding: 3px; color: rgb(23, 26, 209);">User Dashboard</h1>
     <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(0, 180, 216);padding: 3px; color: rgb(0,119,182); border-radius: 5px; ">Departments</h2>
     {%if department_list%}
@@ -15,7 +21,7 @@
                 <tr>
                     <td>{{dept.id}}</td>
                     <td>{{dept.specialization}}</td>
-                    <td><a href="{{url_for('department_details',name=usern,d_id=dept.id)}}" type="button">View Details</a></td>
+                    <td><a href="{{url_for('department_details',u_id=u_id,d_id=dept.id)}}" type="button">View Details</a></td>
                 </tr>
                 {%endfor%}
             </tbody>
@@ -25,9 +31,11 @@
         {%endif%}
     </div>
     <br>
+    <div class="pop_up_message">{{pop_up}}</div>
     <hr style="border: 1px solid rgb(123,44,191); width: 100%; margin: 0px;">
     <br>
     <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(0, 180, 216); color: rgb(0,119,182); border-radius: 3px; padding: 5px; ">Upcoming Appointments</h2>
+    {%if appointments%}
     <div class="login_panel" style="margin-bottom: 50px;">
         <table class="table_user_dashboard">
             <thead style="margin: 10px;">
@@ -39,15 +47,20 @@
                 <th>Action </th>
             </thead>
             <tbody>
+                {%for ap in appointments%}
                 <tr>
-                    <td>120</td>
-                    <td>xxx</td>
-                    <td></td>
-                    <td></td>
-                    <td>12</td>
+                    <td>{{ap.user_id}}</td>
+                    <td>{{ap.doctor_info.full_name}}</td>
+                    <td>{{ap.doctor_info.department.specialization}}</td>
+                    <td>{{ap.date}}</td>
+                    <td>{{ap.time_slot}}</td>
                     <td><a href="#">Cancel</a></td>
                 </tr>
+                {%endfor%}
             </tbody>
         </table>
+        {%else%}
+        <h3>---No Upcoming Appointments are available---</h3>
+        {%endif%}
     </div>
 {%endblock%}

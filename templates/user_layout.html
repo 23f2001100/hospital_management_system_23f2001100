@@ -12,16 +12,10 @@
             <h1 class="wel"><i><b>Welcome! {{usern}}</b></i></h1>
         </div>
         <nav class="nav">
-            <a class="nav_a" href="{{url_for('user_dashboard',name=usern)}}" style="margin-left: 3%;">Home</a>
-            <a class="nav_a" href="#">Edit Profile</a>
-            <a class="nav_a" href="#">My History</a>
+            <a class="nav_a" href="{{url_for('user_dashboard',u_id=u_id)}}" style="margin-left: 3%;">Home</a>
+            <a class="nav_a" href="/edit_user_profile/{{u_id}}">Edit Profile</a>
+            <a class="nav_a" href="/user_hist/{{u_id}}">My History</a>
             <a class="nav_a" href="/login">Logout</a>
-            <span class="nav_a" style="position: absolute; right: 10px;">
-                <form action="#" method="POST">
-                    <input type="text" id="search" name="search" placeholder="Search here!.....">
-                    <button type="button">Search</button>
-                </form>
-            </span>
         
         </nav>
     </header>

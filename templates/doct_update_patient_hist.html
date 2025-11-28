@@ -2,16 +2,16 @@
 {%block content%}
     <div class="login_panel" style="border-color: rgb(76, 175, 80);">
         <h1 style="text-align: center; font-weight: bold; background-color: rgb(76, 175, 80); color: white; border-radius: 3px; padding: 5px; ">Update Patient History</h1>
+        {%if appointment%}
         <pre style="margin: 5%; font-size: x-large;">
-Patients Name: #
-Doctor's Name: #
-Department: #
+Patients Name: {{appointment.user_info.full_name}}
+Department: {{appointment.doctor_info.department.specialization}}
         </pre>
-        <form action="#" method="POST" class="form_style">
+        <form action="{{url_for('ap_update',appoin_id=appointment.id)}}" method="POST" class="form_style">
             <table>
                 <tr>
                     <td><label for="visit_type"  style=" margin-bottom: 1%; font-size:x-large;">Visit Type:</label></td>
-                    <td><input type="text" id="visit_type" name="visit_type" class="input_form" placeholder="Enter visit type"></td>
+                    <td><input type="text" id="visit_type" name="visit_type" class="input_form" value="{{appointment.vist_type}}"></td>
                 </tr>
                 <tr>
                     <td><label for="test_done"  style=" margin-bottom: 1%; font-size:x-large;">Test Done:</label></td>
@@ -23,12 +23,11 @@ Department: #
                 </tr>
 
                 <tr>
-                    <td><label for="prescription"  style=" margin-bottom: 1%; font-size:x-large;">prescription:</label></td>
+                    <td><label for="prescription"  style=" margin-bottom: 1%; font-size:x-large;">Prescription:</label></td>
                     <td><input type="text" id="prescription" name="prescription" class="input_form" placeholder="Enter Prescription"></td>
                 </tr>
                 <tr>
                     <td><label for="medicines"  style=" margin-bottom: 1%; font-size:x-large;">Medicines:</label></td>
-                    <!-- <td><input type="text" id="medicines" name="medicines" class="input_form" placeholder="Enter All Medicines"></td> -->
                     <td><textarea type="text" id="medicines" name="medicines" class="input_form" placeholder="Enter All Medicines"></textarea></td>
                 </tr>
             </table>
@@ -37,5 +36,8 @@ Department: #
                 <button type="submit" style="font-size: large; padding: 20px; margin: 3% 0% 10% 0%;">Add</button>
             </div>
         </form>
+        {%else%}
+        <h3>This appointment doesn't exist</h3>
+        {%endif%}
     </div>
 {%endblock%}

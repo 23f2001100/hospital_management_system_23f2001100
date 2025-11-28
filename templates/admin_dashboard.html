@@ -59,7 +59,7 @@
     <hr style="border: 1px solid black; width: 100%; margin: 0px;">
     <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(123,44,191);padding: 3px; color: rgb(90,24,154); border-radius: 5px; ">Upcoming Appointments</h2>
     <div class="login_panel" style="width: 80%; margin-left: 10%; border: 2px solid rgb(123,44,191)">
-        {%if appointments%}
+        {%if appointments_list%}
         <table class="table_user_dashboard">
             <thead style="margin: 10px;">
                 <th>App_ID</th>
@@ -75,7 +75,7 @@
                     <td>{{appointment.user_info.full_name}}</td>
                     <td>{{appointment.doctor_id}}</td>
                     <td>{{appointment.doctor_info.specialization}}</td>
-                    <td><a href="/user_history" type="button" style="background-color: rgb(90,24,154);">View</a></td>
+                    <td><a href="/admin_user_hist/{{appointment.user_id}}/{{appointment.doctor_id}}" type="button" style="background-color: rgb(90,24,154);">View</a></td>
                 </tr>
                 {%endfor%}
             </tbody>

@@ -1,6 +1,11 @@
 {%extends "user_layout.html"%}
 {%block content%}
-    <!-- <div><a href="{{url_for('user_dashboard',name=usern)}}" type="button" style="color: lime; padding: 80% 0% 10% 90%; right: 10px;">Go back</a></div> -->
+            <span class="nav_a" style="position: absolute; right: 10px;">
+                <form action="/dept_detail_search_bar/{{u_id}}/{{department.id}}" method="POST">
+                    <input type="text" id="search_by_name" name="search_by_name" placeholder="Search here!.....">
+                    <button type="submit">Search</button>
+                </form>
+            </span>
     <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(0, 180, 216);padding: 3px; color: rgb(0,119,182); border-radius: 5px; ">Overview</h2>
     <div class="login_panel" style="width: 80%; margin-left: 10%;">
         {%if department%}
@@ -20,7 +25,7 @@
                 <tr>
                     <td>{{doctor.id}}</td>
                     <td>{{doctor.full_name}}</td>
-                    <td><a href="{{url_for('appointment',doc_id=doctor.id,user_id=usern)}}">Check Availability  |  </a><a href="{{url_for('doc_details',name=usern,doc_id=doctor.id,d_id=department.id)}}">View Details</a></td>
+                    <td><a href="{{url_for('appointment_form',doc_id=doctor.id,u_id=u_id)}}">Check Availability  |  </a><a href="{{url_for('doc_details',u_id=u_id,doc_id=doctor.id,d_id=department.id)}}">View Details</a></td>
                 </tr>
                 {%endfor%}
             </tbody>

@@ -15,9 +15,9 @@
                 {%for ap in appointments_list%}
                 <tr>
                     <td>{{ap.user_id}}</td>
-                    <td>{{ap.doctor_info.full_name}}</td>
-                    <td><a href="/doct_update_patient_hist">Update</a></td>
-                    <td><button><a href="user_relased_spot.html">Mark as complete</a></button><button><a href="user_relased_spot.html">Cancel</a></button></td>
+                    <td>{{ap.user_info.full_name}}</td>
+                    <td><a href="{{url_for('ap_update',appoin_id=ap.id)}}">Update</a></td>
+                    <td><button><a href="#">Mark as complete</a></button><button><a href="#">Cancel</a></button></td>
                 </tr>
                 {%endfor%}
             </tbody>
@@ -41,7 +41,7 @@
                 <tr>
                     <td>{{ap.user_id}}</td>
                     <td>{{ap.user_info.full_name}}</td>
-                    <td><a href="#" type="button">View</a></td>
+                    <td><a href="/doc_user_hist/{{ap.user_id}}/{{doct_id}}" type="button">View</a></td>
                 </tr>
                 {%endfor%}
             </tbody>

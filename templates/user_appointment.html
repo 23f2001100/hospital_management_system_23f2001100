@@ -8,7 +8,7 @@
 </head>
 <body style="background-image: url('/static/image/4950247_19834.svg');">
     <div class="login_panel" style="width: 60%; margin-left: 20%; margin-top: 10%;">
-        <form action="{{url_for('appointment',doc_id=doc_id,user_id=user_id)}}" method="POST" class="form_style">
+        <form action="{{url_for('appointment_form',doc_id=doc_id,u_id=u_id)}}" method="POST" class="form_style">
             <table class="table_user_dashboard">
                 <thead style="margin: 10px;">
                     <th>Date</th>
@@ -16,36 +16,44 @@
                     <th>Evening</th>
                 </thead>
                 <tbody>
-                    {%for appion in avail_list %}
-                    <tr>
-                        {%if appion.time_slot=="morning"%}
-                        <td>{{ day.strftime('%d/%m/%Y') }}</td>
-                        <td>
-                            {%if appion.is_present==0%}
-                            <input type="checkbox" name="{{day}}_morning" disabled>
-                            <p style="color: orangered;">08:00 - 12:00 am</p>
-                            {%else%}
-                            <input type="checkbox" name="{{day}}_morning" >
-                            <p style="color: rgb(23, 114, 23);">08:00 - 12:00 am</p>
+                    {%if avail_list%}
+                        {%for ap in range(0,count,2)%}
+                        <tr>
+                            {%if avail_list[ap] or avail_list[ap+1]%}
+                            <td>{{ avail_list[ap].date.strftime('%d/%m/%Y') }}</td>
+                            <td>
+                                {%if avail_list[ap].is_present==0%}
+                                <input type="checkbox" name="{{avail_list[ap].date}}_morning" disabled>
+                                <p style="color: orangered;">08:00 - 12:00 am</p>
+                                {%else%}
+                                <input type="checkbox" name="{{avail_list[ap].date}}_morning" >
+                                <p style="color: rgb(23, 114, 23);">08:00 - 12:00 am</p>
+                                {%endif%}
+                            </td>
+                            <td>
+                                {%if avail_list[ap+1].is_present==0%}
+                                <input type="checkbox" name="{{avail_list[ap+1].date}}_evening" disabled>
+                                <p style="color: orangered;">04:00 - 09:00 pm</p>
+                                {%else%}
+                                <input type="checkbox" name="{{avail_list[ap+1].date}}_evening">
+                                <p style="color: rgb(23, 114, 23);">04:00 - 09:00 pm</p>
+                                {%endif%}
+                            </td>
                             {%endif%}
-                        </td>
-                        {%elif appion.time_slot=="evening"%}
-                        <td>
-                            {%if appion.is_present==0%}
-                            <input type="checkbox" name="{{day}}_evening" disabled>
-                            <p style="color: orangered;">04:00 - 09:00 pm</p>
-                            {%else%}
-                            <input type="checkbox" name="{{day}}_evening" >
-                            <p style="color: rgb(23, 114, 23);">04:00 - 09:00 pm</p>
-                            {%endif%}
-                        </td>
-                        {%endif%}
-
-                    </tr>
-                    {% endfor %}
+                        </tr>
+                        {%endfor%}
+                    {%else%}
+                    <h3>---No appointment time schedule are availible---</h3>
+                    {%endif%}
                 </tbody>
-                
             </table>
+            <div>
+                <label for="visit_type"  style=" margin-bottom: 1%; font-size:x-large;">Visit_type:</label>
+                <select id="visit_type" name="visit_type" class="input_form">
+                    <option value="In_person">In_person</option>
+                    <option value="Online">Online</option>
+                </select>
+            </div>
             <button type="submit" style="font-size: large; padding: 20px; margin: 3% 0% 10% 0%;">Save</button>
         </form>
     </div>

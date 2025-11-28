@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile Page</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div>
+        <h1 class="wel"><i><b>Welcome! {{user_detail.full_name}}</b></i></h1>
+    </div>
+    <div class="login_panel">
+        <p style="text-align: center; font-size: 50px; margin-bottom: 10px; color: rgb(123, 6, 123);"><b>Edit your profile</b></p>
+        <br>
+        <form action="/edit_user_profile/{{u_id}}" method="POST" class="form_style">
+            <label for="full_name"  style=" margin-bottom: 1%; font-size:x-large; display: block;">Full name:</label>
+            <input type="text" id="full_name" name="full_name" class="input_form" value="{{user_detail.full_name}}">
+            
+            <label for="email"  style=" margin-bottom: 1%; font-size:x-large; display: block;">UserID(E-Mail):</label>
+            <input type="email" id="email" name="email" class="input_form" value="{{user_detail.email}}">
+
+            <label for="password"  style=" margin-bottom: 1%; font-size:x-large; display: block;">Password:</label>
+            <input type="password" id="password" name="password" class="input_form" placeholder="Enter your new password">
+            
+            <br>
+            <a href="/user_dashboard/{{u_id}}" style="display: block; text-decoration: none; font-size: x-large;">Cancel</a>
+            <button class="Centre_button" type="submit" >Save</button>
+            <div class="pop_up_message">{{pop_up}}</div>
+        </form>
+    </div>
+</body>
+</html>
