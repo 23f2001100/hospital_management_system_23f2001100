@@ -223,7 +223,16 @@ def edit_user_profile(u_id):
         return redirect(url_for("user_dashboard",u_id=u_id))
     return render_template("user_edit_profile.html",u_id=u_id,user_detail=u_p)
 
-@app.route("/user_appoin_cancel")
+@app.route("/user_appoin_cancel/<appoin_id>/<u_id>")
+def user_appoin_cancel(appoin_id,u_id):
+    print("____________",request.method,appoin_id)
+    ap = Appointments.query.filter_by(id=appoin_id)
+    if ap:
+        db.session.delete(ap)
+        db.session.commit()
+
+    return redirect(url_for('user_dashboard',u_id=u_id))
+
 #search routers 
 @app.route("/user_dashboard_search_bar/<u_id>",methods=["GET", "POST"])
 def user_dashboard_search_bar(u_id):

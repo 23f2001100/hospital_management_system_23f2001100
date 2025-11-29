@@ -54,7 +54,7 @@
                     <td>{{ap.doctor_info.department.specialization}}</td>
                     <td>{{ap.date}}</td>
                     <td>{{ap.time_slot}}</td>
-                    <td><a href="#">Cancel</a></td>
+                    <td><a href="/user_appoin_cancel/{{ap.id}}/{{ap.user_id}}" type="button">Cancel</a></td>
                 </tr>
                 {%endfor%}
             </tbody>
