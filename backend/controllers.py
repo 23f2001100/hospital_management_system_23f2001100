@@ -57,15 +57,17 @@ def user_dashboard(u_id):
     u_id = int(u_id)
     name=u_get(u_id,"name","user")
     dept=all_departments()
+    usr=User_Info.query.filter_by(id=u_id).first()
     appoin=Appointments.query.filter_by(user_id=u_id).all()
-    return render_template("user_dashboard.html",usern=name,department_list=dept,appointments=appoin,pop_up="",u_id=u_id)
+    return render_template("user_dashboard.html",usern=name,department_list=dept,appointments=appoin,pop_up="",u_id=u_id,usr=usr)
 @app.route("/doctor/<d_id>")
 def doctor_dashboard(d_id):
     d_id = int(d_id)
     today=date.today()
+    dcr=Doctor_Info.query.filter_by(id=d_id).first()
     appoin=Appointments.query.filter(Appointments.doctor_id == d_id,Appointments.date >= today).all()
     name=u_get(d_id,"name","doctor")
-    return render_template("doctor_dashboard.html",usern=name,appointments_list=appoin,doct_id=d_id)
+    return render_template("doctor_dashboard.html",usern=name,appointments_list=appoin,doct_id=d_id,dcr=dcr)
 
 #Adding doctor
 @app.route("/add_doctor",methods=["GET","POST"])
@@ -155,6 +157,7 @@ def appointment_form(doc_id,u_id):
     today=date.today()
     list=Availability.query.filter(Availability.doctor_id == doc_id,Availability.date >= today).all()
     count1=Availability.query.filter(Availability.doctor_id == doc_id,Availability.date >= today).count()
+    appoin_check=Appointments.query.filter_by(user_id=u_id,doctor_id=doc_id).all()
     if request.method=="POST":
         date_str = None
         appoin_timeSlot = None
@@ -163,11 +166,14 @@ def appointment_form(doc_id,u_id):
             break #or instead of break i can apply filter -> if "_" in key and key[0].isdigit(): 
         visit_type=request.form.get("visit_type")
         appoin_date=date.fromisoformat(date_str)
+        for a in appoin_check:
+            if a.date==appoin_date and a.time_slot==appoin_timeSlot:
+                return render_template("user_appointment.html",count=count1,avail_list=list,doc_id=doc_id,u_id=u_id, pop_up="You Have Already An Appointment On This Slot!")
         user_appoin = Appointments(user_id=u_id,doctor_id=doc_id,date=appoin_date,time_slot=appoin_timeSlot,vist_type=visit_type)#there is typo in this model visit
         db.session.add(user_appoin)
         db.session.commit()
         return redirect(url_for("user_dashboard",u_id=u_id))
-    return render_template("user_appointment.html",count=count1,avail_list=list,doc_id=doc_id,u_id=u_id)
+    return render_template("user_appointment.html",count=count1,avail_list=list,doc_id=doc_id,u_id=u_id,pop_up="")
 
 @app.route("/apppointment_update/<appoin_id>", methods=["GET", "POST"])
 def ap_update(appoin_id):
@@ -200,9 +206,10 @@ def doc_user_hist(u_id,d_id):
 @app.route("/user_hist/<u_id>")
 def user_hist(u_id):
     u_id=int(u_id)
+    name=u_get(u_id,"name","user")
     p_h=Appointments.query.filter_by(user_id=u_id).all()
     print("_______________",p_h,type(u_id),u_id)
-    return render_template("user_history.html",history_list=p_h,u_id=u_id)
+    return render_template("user_history.html",usern=name,history_list=p_h,u_id=u_id)
 
 @app.route("/edit_user_profile/<u_id>",methods=["GET", "POST"])
 def edit_user_profile(u_id):
@@ -226,12 +233,45 @@ def edit_user_profile(u_id):
 @app.route("/user_appoin_cancel/<appoin_id>/<u_id>")
 def user_appoin_cancel(appoin_id,u_id):
     print("____________",request.method,appoin_id)
-    ap = Appointments.query.filter_by(id=appoin_id)
+    ap = Appointments.query.filter_by(id=appoin_id).first()
     if ap:
-        db.session.delete(ap)
+        ap.status="Appointment is cancelled!"
         db.session.commit()
 
     return redirect(url_for('user_dashboard',u_id=u_id))
+
+
+@app.route("/doc_appoin_status/<appoin_id>/<d_id>/<msg>")
+def doc_appoin_status(appoin_id,d_id,msg):
+    msg=str(msg)
+    print("____________",request.method,appoin_id)
+    ap = Appointments.query.filter_by(id=appoin_id).first()
+    if ap:
+        ap.status=msg
+        db.session.commit()
+    return redirect(url_for("doctor_dashboard",d_id=d_id))
+
+@app.route("/block_p/<person_id>/<who_p>")
+def block_p(person_id,who_p):
+    if who_p=="user":
+        u=User_Info.query.filter_by(id=person_id).first()
+    elif who_p=="doctor":
+        u=Doctor_Info.query.filter_by(id=person_id).first()
+    if u:
+        u.is_blacklist=1
+        db.session.commit()
+    return redirect(url_for("admin_dashboard",name=a_n()))
+
+@app.route("/unblock_p/<person_id>/<who_p>")
+def unblock_p(person_id,who_p):
+    if who_p=="user":
+        u=User_Info.query.filter_by(id=person_id).first()
+    elif who_p=="doctor":
+        u=Doctor_Info.query.filter_by(id=person_id).first()
+    if u:
+        u.is_blacklist=0
+        db.session.commit()
+    return redirect(url_for("admin_dashboard",name=a_n()))
 
 #search routers 
 @app.route("/user_dashboard_search_bar/<u_id>",methods=["GET", "POST"])
@@ -239,6 +279,7 @@ def user_dashboard_search_bar(u_id):
     #today=date.today()
     u_id = int(u_id)
     name=u_get(u_id,"name","user")
+    usr=User_Info.query.filter_by(id=u_id).first()
     dept=all_departments()
     #appoin=Appointments.query.filter(Appointments.user_id==u_id, Appointments.date>=today).all()
     if request.method=="POST":
@@ -246,9 +287,9 @@ def user_dashboard_search_bar(u_id):
         department_name, dept_appoin=search_department(s_text,u_id)
         #appoin_doctors_name=search_doctor_appoin(s_text,u_id)
         if department_name or dept_appoin:
-            return render_template("user_dashboard.html",usern=name,department_list=department_name,appointments=dept_appoin,pop_up="",u_id=u_id)
+            return render_template("user_dashboard.html",usern=name,department_list=department_name,appointments=dept_appoin,pop_up="",u_id=u_id,usr=usr)
         # elif appoin_doctors_name:
-        #     return render_template("user_dashboard.html",usern=name,department_list=dept,appointments=appoin_doctors_name,pop_up="",u_id=u_id)
+        #     return render_template("user_dashboard.html",usern=name,department_list=dept,appointments=appoin_doctors_name,pop_up="",u_id=u_id,usr=usr)
     return redirect(url_for("user_dashboard",u_id=u_id))
 
 

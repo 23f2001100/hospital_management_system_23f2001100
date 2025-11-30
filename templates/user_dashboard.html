@@ -1,5 +1,8 @@
 {%extends "user_layout.html"%}
 {%block content%}
+    {%if usr.is_blacklist!=0%}
+    <h1 style="font-weight: bolder; color:red; margin: 15% 30% 30% 30%;">You Are Blocked From Our Website. Please! Contact Hospital Administrative</h1>
+    {%else%}
             <span class="nav_a" style="position: absolute; right: 10px;">
                 <form action="/user_dashboard_search_bar/{{u_id}}" method="POST">
                     <input type="text" id="search_by_name" name="search_by_name" placeholder="Search here!.....">
@@ -44,6 +47,7 @@
                 <th>Department</th>
                 <th>Date</th>
                 <th>Time</th>
+                <th>Status</th>
                 <th>Action </th>
             </thead>
             <tbody>
@@ -54,7 +58,12 @@
                     <td>{{ap.doctor_info.department.specialization}}</td>
                     <td>{{ap.date}}</td>
                     <td>{{ap.time_slot}}</td>
+                    <td>{{ap.status}}</td>
+                    {%if ap.status=="Incomplete"%}
                     <td><a href="/user_appoin_cancel/{{ap.id}}/{{ap.user_id}}" type="button">Cancel</a></td>
+                    {%else%}
+                    <td><h3 style="display: inline-block; font-weight: lighter;">X</h3></td>
+                    {%endif%}
                 </tr>
                 {%endfor%}
             </tbody>
@@ -63,4 +72,5 @@
         <h3>---No Upcoming Appointments are available---</h3>
         {%endif%}
     </div>
+    {%endif%}
 {%endblock%}

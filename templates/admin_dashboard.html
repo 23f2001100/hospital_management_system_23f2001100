@@ -17,7 +17,7 @@
                     <td>{{doctor.id}}</td>
                     <td>{{doctor.full_name}}</td>
                     <td>{{doctor.department.specialization}}</td>
-                    <td><button><a href="user_relased_spot.html">Edit</a></button><button><a href="user_relased_spot.html">Delete</a></button><button><a href="user_relased_spot.html">Blacklist</a></button></td>
+                    <td><a href="user_relased_spot.html">Edit</a>  |  <a href="user_relased_spot.html">Delete</a>  |  {%if doctor.is_blacklist==1%}<a href="/unblock_p/{{doctor.id}}/{{'doctor'}}">Unblock</a>{%else%}<a href="/block_p/{{doctor.id}}/{{'doctor'}}">Blacklist</a>{%endif%}</td>
                 </tr>
                 {%endfor%}
             </tbody>
@@ -46,7 +46,7 @@
                 <tr>
                     <td>{{user.id}}</td>
                     <td>{{user.full_name}}</td>
-                    <td><button><a href="user_relased_spot.html">Edit</a></button><button><a href="user_relased_spot.html">Delete</a></button><button><a href="user_relased_spot.html">Blacklist</a></button></td>
+                    <td><a href="user_relased_spot.html">Delete</a>  |  {%if user.is_blacklist==1%}<a href="/unblock_p/{{user.id}}/{{'user'}}">Unblock</a>{%else%}<a href="/block_p/{{user.id}}/{{'user'}}">Blacklist</a>{%endif%}</td>
                 </tr>
                 {%endfor%}
             </tbody>

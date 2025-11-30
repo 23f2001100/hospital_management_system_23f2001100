@@ -24,11 +24,18 @@ Department: {{history_list[0].doctor_info.department.specialization}}
                     {%for h in history_list%}
                     <tr>
                         <td>{{h.id}}</td>
+                        {%if h.status!="Appointment is cancelled!"}
                         <td>{{h.vist_type}} correct your typo</td>
                         <td>{{h.test_done}}</td>
                         <td>{{h.diagnosis}}</td>
                         <td>{{h.prescription}}</td>
                         <td>{{h.medicines}}</td>
+                        {%else%}
+                        <td>An</td>
+                        <td>Appointment</td>
+                        <td>was</td>
+                        <td>cancelled</td>
+                        <td>!</td>
                     </tr>
                     {%endfor%}
                 </tbody>
