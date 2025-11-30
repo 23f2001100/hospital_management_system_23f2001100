@@ -158,7 +158,8 @@ def doc_details(u_id,doc_id,d_id):
 
 @app.route("/doct_availability/<doc_id>", methods=["GET", "POST"])
 def doct_availability(doc_id):
-    doctor_id=doc_id
+    doctor_id=int(doc_id)
+    name=u_get(doctor_id,"name","doctor")
     if request.method == "POST":
         selected_slots = request.form
         Availability.query.filter_by(doctor_id=doctor_id).delete()
@@ -180,7 +181,7 @@ def doct_availability(doc_id):
     #Show next 7 days
     today = date.today()
     week_days = [(today + timedelta(days=i)) for i in range(7)]
-    return render_template("doct_availability.html", week_days=week_days,doct_id=doctor_id)
+    return render_template("doct_availability.html", week_days=week_days,doct_id=doctor_id,usern=name)
 
 @app.route("/appointment_form/<doc_id>/<u_id>", methods=["GET", "POST"])
 def appointment_form(doc_id,u_id):
@@ -206,9 +207,10 @@ def appointment_form(doc_id,u_id):
     return render_template("user_appointment.html",count=count1,avail_list=list,doc_id=doc_id,u_id=u_id,pop_up="")
 
 @app.route("/apppointment_update/<appoin_id>", methods=["GET", "POST"])
-def ap_update(appoin_id):
+def apppointment_update(appoin_id):
     a_p=Appointments.query.filter(Appointments.id==appoin_id).first()
     d_id=a_p.doctor_id
+    name=u_get(d_id,"name","doctor")
     if request.method=="POST":
         t=request.form.get("test_done")
         d=request.form.get("diagnosis")
@@ -220,7 +222,7 @@ def ap_update(appoin_id):
         a_p.medicines=m
         db.session.commit()
         return redirect(url_for("doctor_dashboard",d_id=d_id))
-    return render_template("doct_update_patient_hist.html",appointment=a_p,d_id=d_id)
+    return render_template("doct_update_patient_hist.html",appointment=a_p,d_id=d_id,doct_id=d_id,usern=name)
 
 #All history routers
 @app.route("/admin_user_hist/<u_id>/<d_id>")
@@ -245,6 +247,7 @@ def user_hist(u_id):
 
 @app.route("/edit_user_profile/<u_id>",methods=["GET", "POST"])
 def edit_user_profile(u_id):
+    u_id=int(u_id)
     u_p=User_Info.query.filter(User_Info.id==u_id).first()
     if request.method=="POST":
         name=request.form.get("full_name")
@@ -252,15 +255,15 @@ def edit_user_profile(u_id):
         pwd=request.form.get("password")
         usr=User_Info.query.filter(User_Info.email==em,User_Info.id!=u_id).first()
         if usr:
-            return render_template("user_edit_profile.html", pop_up="This user already exists... Try different email id",u_id=u_id,user_detail=u_p)
+            return render_template("user_edit_profile.html", pop_up="This user already exists... Try different email id",u_id=u_id,user_detail=u_p,usern=u_p.full_name)
         elif not (name and em and pwd):
-            return render_template("user_edit_profile.html", pop_up="Please! Enter all details",u_id=u_id,user_detail=u_p)
+            return render_template("user_edit_profile.html", pop_up="Please! Enter all details",u_id=u_id,user_detail=u_p,usern=u_p.full_name)
         u_p.full_name=name
         u_p.email=em
         u_p.password=pwd
         db.session.commit()
         return redirect(url_for("user_dashboard",u_id=u_id))
-    return render_template("user_edit_profile.html",u_id=u_id,user_detail=u_p)
+    return render_template("user_edit_profile.html",u_id=u_id,user_detail=u_p,usern=u_p.full_name)
 
 @app.route("/user_appoin_cancel/<appoin_id>/<u_id>")
 def user_appoin_cancel(appoin_id,u_id):

@@ -3,13 +3,14 @@
     {%if usr.is_blacklist!=0%}
     <h1 style="font-weight: bolder; color:red; margin: 15% 30% 30% 30%;">You Are Blocked From Our Website. Please! Contact Hospital Administrative</h1>
     {%else%}
-            <span class="nav_a" style="position: absolute; right: 10px;">
+            
+    <h1 style="text-align: center; font-weight: bold; padding: 3px; color: rgb(23, 26, 209);">User Dashboard</h1>
+            <span >
                 <form action="/user_dashboard_search_bar/{{u_id}}" method="POST">
-                    <input type="text" id="search_by_name" name="search_by_name" placeholder="Search here!.....">
-                    <button type="submit">Search</button>
+                    <input style="width: 20%; height: 20px; font-size: medium; display: inline-block; margin-left: 70%;" type="text" id="search_by_name" name="search_by_name" placeholder="Search here!.....">
+                    <button type="submit" style="padding: 4px 8px 4px 8px; font-size: medium; display: inline-block; color: white; background-color: rgb(23, 26, 209); border-radius: 2%;">Search</button>
                 </form>
             </span>
-    <h1 style="text-align: center; font-weight: bold; padding: 3px; color: rgb(23, 26, 209);">User Dashboard</h1>
     <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(0, 180, 216);padding: 3px; color: rgb(0,119,182); border-radius: 5px; ">Departments</h2>
     {%if department_list%}
     <div class="login_panel" style="width: 80%; margin-left: 10%;">
@@ -39,7 +40,7 @@
     <br>
     <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(0, 180, 216); color: rgb(0,119,182); border-radius: 3px; padding: 5px; ">Upcoming Appointments</h2>
     {%if appointments%}
-    <div class="login_panel" style="margin-bottom: 50px;">
+    <div class="login_panel" style="margin-bottom: 50px; width: 90%; margin-left: 5%;">
         <table class="table_user_dashboard">
             <thead style="margin: 10px;">
                 <th>ID</th>

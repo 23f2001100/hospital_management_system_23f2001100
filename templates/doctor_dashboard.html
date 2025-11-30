@@ -6,13 +6,13 @@
     {%else%}
     <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(76, 175, 80);padding: 3px; color: rgb(0, 150, 136); border-radius: 5px; ">Upcoming Appointments</h2>
     {%if appointments_list%}
-    <div class="login_panel" style="width: 80%; margin-left: 10%; border: 2px solid rgb(76, 175, 80)">
+    <div class="login_panel" style="width: 90%;padding-right: 2%; margin-left: 5%; border: 2px solid rgb(76, 175, 80)">
         <table class="table_user_dashboard">
             <thead style="margin: 10px;">
                 <th>ID</th>
                 <th>Patient Name</th>
                 <th>Date</th>
-                <th>Patient History</th>
+                <th>Patient Update</th>
                 <th>Action</th>
             </thead>
             <tbody>
@@ -21,8 +21,8 @@
                     <td>{{ap.user_id}}</td>
                     <td>{{ap.user_info.full_name}}</td>
                     <td>{{ap.date.strftime('%d/%m/%Y')}}</td>
-                    <td><a href="{{url_for('ap_update',appoin_id=ap.id)}}" class="color_button" style="background-color: yellow;">Update</a></td>
                     {%if ap.status=="Incomplete"%}
+                    <td><a href="{{url_for('apppointment_update',appoin_id=ap.id)}}" class="color_button" style="background-color: yellow;">Update</a></td>
                     <td><a href="/doc_appoin_status/{{ap.id}}/{{doct_id}}/{{'Mark as complete'}}" type="button" class="color_button" style="background-color: lightgreen;">Mark as complete</a>  |  <a href="/doc_appoin_status/{{ap.id}}/{{doct_id}}/{{'Appointment is cancelled!'}}" class="color_button" style="background-color: orangered;">Cancel</a></td>
                     {%else%}
                     <td>{{ap.status}}</td>
@@ -59,8 +59,8 @@
         <h3>---No Upcoming Appointments are available---</h3>
         {%endif%}
     </div>
+    <a href="/doct_availability/{{doct_id}}" type="button" class="Centre_button" style="background-color: lime;">Provide Availability</a>
     <span style="font-size: x-large; background-color: lightgreen; color: white; right: 5%; bottom: 10%;">
-        <a href="/doct_availability/{{doct_id}}" type="button" class="color_button" style="background-color: lime;">Provide Availability</a>
     </span>
     {%endif%}
 {%endblock%}

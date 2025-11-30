@@ -8,7 +8,7 @@
             </span>
     <h1 style="text-align: center; font-weight: bold; padding: 3px; color: rgba(60,9,108,0.9);">Admin Dashboard</h1>
     <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(123,44,191);padding: 3px; color: rgb(90,24,154); border-radius: 5px; ">Detail Of Doctors</h2>
-    <div class="login_panel" style="width: 80%; margin-left: 10%; border: 2px solid rgb(123,44,191)">
+    <div class="login_panel" style="width: 80%; margin-left: 7%; border: 2px solid rgb(123,44,191); padding-right: 5%;">
         {%if doctor_list%}
         <table class="table_user_dashboard">
             <thead style="margin: 10px;">
@@ -81,7 +81,7 @@
                     <td>{{appointment.user_info.full_name}}</td>
                     <td>{{appointment.doctor_info.full_name}}</td>
                     <td>{{appointment.doctor_info.department.specialization}}</td>
-                    <td><a href="{{ url_for('admin_user_hist', u_id=appointment.user_id, d_id=appointment.doctor_id) }}" type="button" style="background-color: rgb(90,24,154); color: azure;">View</a></td>
+                    <td><a href="{{ url_for('admin_user_hist', u_id=appointment.user_id, d_id=appointment.doctor_id) }}" type="button" class="color_button" style="background-color: rgb(90,24,154); color: azure;">View</a></td>
                 </tr>
                 {%endfor%}
             </tbody>

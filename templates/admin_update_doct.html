@@ -36,7 +36,7 @@
                 
                 <tr>
                     <td><label for="bio"  style=" margin-bottom: 1%; font-size:x-large;">Bio:</label></td>
-                    <td><textarea type="text" id="bio" name="bio" class="input_form" ></textarea></td>
+                    <td><textarea type="text" id="bio" name="bio" class="input_form" >{{doc.bio}}</textarea></td>
                     
                 </tr>
                 
@@ -44,7 +44,7 @@
             <br>
             <div>
                 <a href="{{url_for('admin_dashboard',name=usern)}}" class="Centre_button" type="button" >Cancel</a>
-                <button type="submit" style="font-size: large; padding: 20px; margin: 3% 0% 10% 0%; background-color: rgb(90,24,154);">Save</button>
+                <button type="submit" style="font-size: large; padding: 15px; margin: 3% 0% 10% 10%; background-color: rgb(90,24,154); color: white; border-radius: 5%;">Save</button>
             </div>
         </form>
         <div class="pop_up_message">{{pop_up}}</div>

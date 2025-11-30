@@ -1,15 +1,15 @@
 {%extends "user_layout.html"%}
 {%block content%}
-            <span class="nav_a" style="position: absolute; right: 10px;">
-                <form action="/dept_detail_search_bar/{{u_id}}/{{department.id}}" method="POST">
-                    <input type="text" id="search_by_name" name="search_by_name" placeholder="Search here!.....">
-                    <button type="submit">Search</button>
-                </form>
-            </span>
+<span >
+    <form action="/dept_detail_search_bar/{{u_id}}/{{department.id}}" method="POST">
+        <input style="width: 20%; height: 20px; font-size: medium; display: inline-block; margin-left: 70%;" type="text" id="search_by_name" name="search_by_name" placeholder="Search here!.....">
+        <button type="submit" style=" padding: 4px 8px 4px 8px; margin-top: 20px; font-size: medium; display: inline-block; color: white; background-color: rgb(23, 26, 209); border-radius: 2%;">Search</button>
+    </form>
+</span>
     <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(0, 180, 216);padding: 3px; color: rgb(0,119,182); border-radius: 5px; ">Overview</h2>
     <div class="login_panel" style="width: 80%; margin-left: 10%;">
         {%if department%}
-        <h2 style="font-weight: 300;">{{department.description}}</h2>
+        <h2 style="font-weight: 300; padding: 5%;"><b>About Department: </b>{{department.description}}</h2>
     </div>
     <br>
     <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(0, 180, 216);padding: 3px; color: rgb(0,119,182); border-radius: 5px; ">Doctor's list</h2>
@@ -25,7 +25,7 @@
                 <tr>
                     <td>{{doctor.id}}</td>
                     <td>{{doctor.full_name}}</td>
-                    <td><a href="{{url_for('appointment_form',doc_id=doctor.id,u_id=u_id)}}" class="color_button">Check Availability  |  </a><a href="{{url_for('doc_details',u_id=u_id,doc_id=doctor.id,d_id=department.id)}}" class="color_button" >View Details</a></td>
+                    <td><a href="{{url_for('appointment_form',doc_id=doctor.id,u_id=u_id)}}" class="color_button">Check Availability</a>      <a href="{{url_for('doc_details',u_id=u_id,doc_id=doctor.id,d_id=department.id)}}" class="color_button" >View Details</a></td>
                 </tr>
                 {%endfor%}
             </tbody>

@@ -8,8 +8,9 @@
 </head>
 <body style="background-image: url('/static/image/4950247_19834.svg');">
     <div class="login_panel" style="width: 60%; margin-left: 20%; margin-top: 10%;">
+        <h1 style="text-align: center; font-weight: bold; border: 2px solid rgb(0, 180, 216); background-color: rgb(0, 180, 216); color: white; border-radius: 3px; padding: 5px; ">Book Your Appointment</h1>
         <form action="{{url_for('appointment_form',doc_id=doc_id,u_id=u_id)}}" method="POST" class="form_style">
-            <table class="table_user_dashboard">
+            <table class="table_user_dashboard" style="margin-left: 0%;">
                 <thead style="margin: 10px;">
                     <th>Date</th>
                     <th>Morning</th>
@@ -54,7 +55,7 @@
                     <option value="Online">Online</option>
                 </select>
             </div>
-            <button type="submit" style="font-size: large; padding: 20px; margin: 3% 0% 10% 0%;">Save</button>
+            <button type="submit" class="Centre_button">Save</button>
         </form>
         <div class="pop_up_message">{{pop_up}}</div>
     </div>

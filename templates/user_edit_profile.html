@@ -23,11 +23,12 @@
             <label for="password"  style=" margin-bottom: 1%; font-size:x-large; display: block;">Password:</label>
             <input type="password" id="password" name="password" class="input_form" placeholder="Enter your new password">
             
-            <br>
-            <a href="/user_dashboard/{{u_id}}" style="display: block; text-decoration: none; font-size: x-large;">Cancel</a>
-            <button class="Centre_button" type="submit" >Save</button>
-            <div class="pop_up_message">{{pop_up}}</div>
+            <div>
+                <a href="{{url_for('user_dashboard', u_id=user_detail.id)}}" class="Centre_button" type="button" style="background-color: snow; margin-left: 25%;">Cancel</a>
+                <button class="Centre_button" type="submit" style="font-size: large; padding: 20px; margin: 3% 0% 10% 5%;">Save</button>
+            </div>
         </form>
+        <div class="pop_up_message">{{pop_up}}</div>
     </div>
 </body>
 </html>

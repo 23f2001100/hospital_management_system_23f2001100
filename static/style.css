@@ -103,8 +103,11 @@ a{
 .color_button{
     text-decoration: none;
     color:black;
-    background-color: skyblue;
-    border-radius: 20%;
+    background-color: rgb(191, 237, 247);
+    border-radius: 10%;
     border: 2px double black;
-    padding: 0% 2% 0% 2%;
+    padding: 2% 3% 2% 3%;
+    font-weight: bold;
+    font-size: 18px;
+    display: inline-block;
 }

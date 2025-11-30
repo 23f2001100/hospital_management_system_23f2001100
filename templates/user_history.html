@@ -1,7 +1,7 @@
 {%extends "user_layout.html"%}
 {%block content%}
-    <div class="login_panel" style="border-color: rgb(76, 175, 80); width: 90%; margin-left: 5%;">
-        <h1 style="text-align: center; font-weight: bold; border: 2px solid rgb(76, 175, 80); background-color: rgb(60,9,108); color: white; border-radius: 3px; padding: 5px; ">Patient History</h1>
+    <div class="login_panel" style="border-color: rgb(0, 180, 216); width: 90%; margin-left: 5%;">
+        <h1 style="text-align: center; font-weight: bold; border: 2px solid rgb(0, 180, 216); background-color: rgb(0, 180, 216); color: white; border-radius: 3px; padding: 5px; ">Patient History</h1>
         <br>
         {%if history_list%}
         <pre style="margin: 5%; font-size: x-large;">
@@ -10,7 +10,7 @@ Doctor Name:
 Department: {{history_list[0].doctor_info.department.specialization}}
 
         </pre>
-        <div class="login_panel" style="width: 90%; margin-left: 5%; border: 2px solid rgb(76, 175, 80)">
+        <div class="login_panel" style="width: 90%; margin-left: 5%; border: 2px solid rgb(0, 180, 216)">
             <table class="table_user_dashboard" style="margin: 5px;">
                 <thead style="margin: 10px;">
                     <th>Visit ID</th>
@@ -40,7 +40,7 @@ Department: {{history_list[0].doctor_info.department.specialization}}
         </div>
         <br>
         <div>
-            <button style="font-size: large; padding: 20px; margin: 3% 20% 10% 20%;"><a href="{{url_for('user_dashboard',u_id=u_id)}}">Back</a>
+            <button class="Centre_button"><a href="{{url_for('user_dashboard',u_id=u_id)}}">Back</a></button>
         </div>
         {%else%}
         <h3>----No Records are found----</h3>
