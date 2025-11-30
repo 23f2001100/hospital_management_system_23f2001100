@@ -64,4 +64,3 @@ class Availability(db.Model):
     # from app import *
     # db.create_all()
     # quit()
-    #Milestone-HMS DB-Relationship

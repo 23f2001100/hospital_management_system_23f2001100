@@ -225,6 +225,9 @@ def ap_update(appoin_id):
 #All history routers
 @app.route("/admin_user_hist/<u_id>/<d_id>")
 def admin_user_hist(u_id,d_id):
+    print("______________________",u_id,d_id)
+    u_id=int(u_id)
+    d_id=int(d_id)
     p_h=Appointments.query.filter_by(user_id=u_id,doctor_id=d_id).all()
     return render_template("admin_user_history.html",history_list=p_h,usern=a_n())
 

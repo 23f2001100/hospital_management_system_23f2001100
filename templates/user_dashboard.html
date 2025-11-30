@@ -24,7 +24,7 @@
                 <tr>
                     <td>{{dept.id}}</td>
                     <td>{{dept.specialization}}</td>
-                    <td><a href="{{url_for('department_details',u_id=u_id,d_id=dept.id)}}" type="button">View Details</a></td>
+                    <td><a href="{{url_for('department_details',u_id=u_id,d_id=dept.id)}}" type="button" class="color_button">View Details</a></td>
                 </tr>
                 {%endfor%}
             </tbody>
@@ -60,7 +60,7 @@
                     <td>{{ap.time_slot}}</td>
                     <td>{{ap.status}}</td>
                     {%if ap.status=="Incomplete"%}
-                    <td><a href="/user_appoin_cancel/{{ap.id}}/{{ap.user_id}}" type="button">Cancel</a></td>
+                    <td><a href="/user_appoin_cancel/{{ap.id}}/{{ap.user_id}}" type="button" class="color_button" style="background-color: orangered;">Cancel</a></td>
                     {%else%}
                     <td><h3 style="display: inline-block; font-weight: lighter;">X</h3></td>
                     {%endif%}

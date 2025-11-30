@@ -21,9 +21,9 @@
                     <td>{{ap.user_id}}</td>
                     <td>{{ap.user_info.full_name}}</td>
                     <td>{{ap.date.strftime('%d/%m/%Y')}}</td>
-                    <td><a href="{{url_for('ap_update',appoin_id=ap.id)}}">Update</a></td>
+                    <td><a href="{{url_for('ap_update',appoin_id=ap.id)}}" class="color_button" style="background-color: yellow;">Update</a></td>
                     {%if ap.status=="Incomplete"%}
-                    <td><a href="/doc_appoin_status/{{ap.id}}/{{doct_id}}/{{'Mark as complete'}}" type="button">Mark as complete</a>  |  <a href="/doc_appoin_status/{{doct_id}}/{{'Appointment is cancelled!'}}">Cancel</a></td>
+                    <td><a href="/doc_appoin_status/{{ap.id}}/{{doct_id}}/{{'Mark as complete'}}" type="button" class="color_button" style="background-color: lightgreen;">Mark as complete</a>  |  <a href="/doc_appoin_status/{{ap.id}}/{{doct_id}}/{{'Appointment is cancelled!'}}" class="color_button" style="background-color: orangered;">Cancel</a></td>
                     {%else%}
                     <td>{{ap.status}}</td>
                     {%endif%}
@@ -50,7 +50,7 @@
                 <tr>
                     <td>{{ap.user_id}}</td>
                     <td>{{ap.user_info.full_name}}</td>
-                    <td><a href="/doc_user_hist/{{ap.user_id}}/{{doct_id}}" type="button">View</a></td>
+                    <td><a href="/doc_user_hist/{{ap.user_id}}/{{doct_id}}" type="button" class="color_button">View</a></td>
                 </tr>
                 {%endfor%}
             </tbody>
@@ -60,7 +60,7 @@
         {%endif%}
     </div>
     <span style="font-size: x-large; background-color: lightgreen; color: white; right: 5%; bottom: 10%;">
-        <a href="/doct_availability/{{doct_id}}" type="button">Provide Availability</a>
+        <a href="/doct_availability/{{doct_id}}" type="button" class="color_button" style="background-color: lime;">Provide Availability</a>
     </span>
     {%endif%}
 {%endblock%}

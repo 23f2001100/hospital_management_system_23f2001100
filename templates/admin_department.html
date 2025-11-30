@@ -1,7 +1,7 @@
 {%extends "admin_layout.html"%}
 {%block content%}
     <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(123,44,191);padding: 3px; color: rgb(90,24,154); border-radius: 5px; ">All Available Department</h2>
-    <div class="login_panel" style="width: 40%; margin-left: 10%; border: 2px solid rgb(123,44,191)">
+    <div class="login_panel" style="width: 70%; margin-left: 15%; border: 2px solid rgb(123,44,191)">
         {%if department_list%}
         <table class="table_user_dashboard">
             <thead style="margin: 10px;">
@@ -21,7 +21,7 @@
         <h3>---Not Available---</h3>
         {%endif%}
         <a href="{{ url_for('add_department') }}" class="Centre_button" type="button" style="background-color: rgb(90,24,154); color: white;">+Add Department</a>
-        <a href="{{ url_for('admin_dashboard',name=usern) }}" class="Centre_button" type="button" style="background-color: rgb(90,24,154); color: white;">Back</a>
+        <a href="{{ url_for('admin_dashboard',name=usern) }}" class="Centre_button" type="button" style="background-color: rgb(90,24,154); color: white; margin-left: 5%;">Back</a>
         <div class="pop_up_message">{{pop_up}}</div>
     </div>
 {%endblock%}

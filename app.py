@@ -1,6 +1,6 @@
 from flask import Flask
 from backend.models import db
-
+from backend.api_controllers import *
 
 
 app=None
@@ -10,6 +10,7 @@ def setup_app():
     
     #sql conn
     db.init_app(app)
+    api.init_app(app)
     app.app_context().push()
     app.debug=True
     print("Hospital management app is starting.....")

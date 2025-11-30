@@ -23,7 +23,7 @@
                     <td>{{doctor.id}}</td>
                     <td>{{doctor.full_name}}</td>
                     <td>{{doctor.department.specialization}}</td>
-                    <td><a href="/admin_doc_update/{{doctor.id}}">Edit</a>  |  <a href="/delete_person/{{doctor.id}}/{{'doctor'}}">Delete</a>  |  {%if doctor.is_blacklist==1%}<a href="/unblock_p/{{doctor.id}}/{{'doctor'}}">Unblock</a>{%else%}<a href="/block_p/{{doctor.id}}/{{'doctor'}}">Blacklist</a>{%endif%}</td>
+                    <td><a href="/admin_doc_update/{{doctor.id}}"  class="color_button">Edit</a>  |  <a href="/delete_person/{{doctor.id}}/{{'doctor'}}" class="color_button" style="background-color: orangered;">Delete</a>  |  {%if doctor.is_blacklist==1%}<a href="/unblock_p/{{doctor.id}}/{{'doctor'}} " class="color_button" style="background-color: yellow;">Unblock</a>{%else%}<a href="/block_p/{{doctor.id}}/{{'doctor'}}" class="color_button" style="background-color: yellow;">Blacklist</a>{%endif%}</td>
                 </tr>
                 {%endfor%}
             </tbody>
@@ -31,7 +31,7 @@
         {%else%}
         <h3>---No doctor are added---</h3>
         {%endif%}
-        <a href="{{ url_for('admin_add_doctor') }}" class="Centre_button" type="button" style="background-color: rgb(90,24,154);">+Add Doctor</a>
+        <a href="{{ url_for('admin_add_doctor') }}" class="Centre_button" type="button" style="background-color: rgb(90,24,154); color: azure;">+Add Doctor</a>
     </div>
     <div class="pop_up_message">{{pop_up}}</div>
     <br>
@@ -52,7 +52,7 @@
                 <tr>
                     <td>{{user.id}}</td>
                     <td>{{user.full_name}}</td>
-                    <td><a href="/delete_person/{{user.id}}/{{'user'}}">Delete</a>  |  {%if user.is_blacklist==1%}<a href="/unblock_p/{{user.id}}/{{'user'}}">Unblock</a>{%else%}<a href="/block_p/{{user.id}}/{{'user'}}">Blacklist</a>{%endif%}</td>
+                    <td><a href="/delete_person/{{user.id}}/{{'user'}}" class="color_button" style="background-color: orangered;">Delete</a>  |  {%if user.is_blacklist==1%}<a href="/unblock_p/{{user.id}}/{{'user'}}" class="color_button" style="background-color: yellow;">Unblock</a>{%else%}<a href="/block_p/{{user.id}}/{{'user'}}" class="color_button" style="background-color: yellow;">Blacklist</a>{%endif%}</td>
                 </tr>
                 {%endfor%}
             </tbody>
@@ -81,7 +81,7 @@
                     <td>{{appointment.user_info.full_name}}</td>
                     <td>{{appointment.doctor_info.full_name}}</td>
                     <td>{{appointment.doctor_info.department.specialization}}</td>
-                    <td><a href="/admin_user_hist/{{appointment.user_id}}/{{appointment.doctor_id}}" type="button" style="background-color: rgb(90,24,154);">View</a></td>
+                    <td><a href="{{ url_for('admin_user_hist', u_id=appointment.user_id, d_id=appointment.doctor_id) }}" type="button" style="background-color: rgb(90,24,154); color: azure;">View</a></td>
                 </tr>
                 {%endfor%}
             </tbody>

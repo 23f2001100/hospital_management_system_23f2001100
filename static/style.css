@@ -99,3 +99,12 @@ a{
     text-align: center;
     margin: 10px;
 }
+
+.color_button{
+    text-decoration: none;
+    color:black;
+    background-color: skyblue;
+    border-radius: 20%;
+    border: 2px double black;
+    padding: 0% 2% 0% 2%;
+}
