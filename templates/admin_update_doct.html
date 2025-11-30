@@ -1,44 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Parking Lot Page</title>
-    <link rel="stylesheet" href="/pro/static/style.css">
-</head>
-<body>
+{%extends "admin_layout.html"%}
+{%block content%}
     <div class="login_panel" style="border-color: rgb(123, 44, 191);">
-        <h1 style="text-align: center; font-weight: bold; border: 2px solid rgb(123,44,191); background-color: rgb(60,9,108); color: white; border-radius: 3px; padding: 5px; ">Edit Parking Lot</h1>
+        <h1 style="text-align: center; font-weight: bold; border: 2px solid rgb(123,44,191); background-color: rgb(60,9,108); color: white; border-radius: 3px; padding: 5px; ">Edit Doctor Details</h1>
         <br>
-        <form action="#" class="form_style">
+        <form action="/admin_doc_update/{{doc.id}}" method="POST" class="form_style">
             <table>
                 <tr>
-                    <td><label for="prime_location_name"  style=" margin-bottom: 1%; font-size:x-large;">Prime Location Name:</label></td>
-                    <td><input type="text" id="prime_location_name" name="prime_location_name" class="input_form" placeholder="Prime location"></td>
+                    <td><label for="full_name"  style=" margin-bottom: 1%; font-size:x-large;">Name:</label></td>
+                    <td><input type="text" id="full_name" name="full_name" class="input_form" value="{{doc.full_name}}"></td>
+                </tr>
+                
+                <tr>
+                    <td><label for="email"  style=" margin-bottom: 1%; font-size:x-large;">UserID(E-Mail):</label></td>
+                    <td><input type="email" id="email" name="email" class="input_form" value="{{doc.email}}"></td>
                 </tr>
                 <tr>
-                    <td><label for="address"  style=" margin-bottom: 1%; font-size:x-large;">Address:</label></td>
-                    <td><input type="text" id="address" name="address" class="input_form" placeholder="Address"></td>
+                    <td><label for="password"  style=" margin-bottom: 1%; font-size:x-large;">Password:</label></td>
+                    <td><input type="password" id="password" name="password" class="input_form" placeholder="Enter password again!"></td>
+                </tr>
+                
+                <tr>
+                    <td><label for="specialization_id"  style=" margin-bottom: 1%; font-size:x-large;">Specialization:</label></td>
+                    <td>
+                        <select id="specialization_id" name="specialization_id" class="input_form">
+                            {%for dept in department_list%}
+                            <option value="{{dept.id}}">{{dept.specialization}}</option>
+                            {%endfor%}
+                        </select>
+                    </td>
                 </tr>
                 <tr>
-                    <td><label for="pin_code"  style=" margin-bottom: 1%; font-size:x-large;">Pin code:</label></td>
-                    <td><input type="number" id="pin_code" name="pin_code" class="input_form" placeholder="pincode "></td>
+                    <td><label for="experience"  style=" margin-bottom: 1%; font-size:x-large;">Experience(years):</label></td>
+                    <td><input type="number" id="experience" name="experience" class="input_form" value="{{doc.experience}}"></td>
                 </tr>
+                
                 <tr>
-                    <td><label for="price"  style=" margin-bottom: 1%; font-size:x-large;">Price(per hour):</label></td>
-                    <td><input type="number" id="price" name="price" class="input_form" placeholder="price"></td>
+                    <td><label for="bio"  style=" margin-bottom: 1%; font-size:x-large;">Bio:</label></td>
+                    <td><textarea type="text" id="bio" name="bio" class="input_form" ></textarea></td>
+                    
                 </tr>
-                <tr>
-                    <td><label for="maximum_spots"  style=" margin-bottom: 1%; font-size:x-large;">Maximum spots:</label></td>
-                    <td><input type="number" class="input_form" placeholder="Maximumspot "></td>
-                </tr>
+                
             </table>
             <br>
             <div>
-                <button style="font-size: large; padding: 20px; margin: 3% 20% 10% 20%;"><a href="admin_dashboard.html" >Cancel</a></button>
-                <button style="font-size: large; padding: 20px; margin: 3% 0% 10% 0%;">Update</button>
+                <a href="{{url_for('admin_dashboard',name=usern)}}" class="Centre_button" type="button" style="background-color: rgb(90,24,154);">Cancel</a>
+                <button type="submit" style="font-size: large; padding: 20px; margin: 3% 0% 10% 0%;">Save</button>
             </div>
         </form>
+        <div class="pop_up_message">{{pop_up}}</div>
     </div>
-</body>
-</html>
+    
+{%endblock%}

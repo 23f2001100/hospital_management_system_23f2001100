@@ -49,8 +49,7 @@ def signup():
 def admin_dashboard(name):
     doctor_list=all_doctor()
     patient_list=all_user()
-    today=date.today()
-    appoin=Appointments.query.filter(Appointments.date >= today).all()
+    appoin=all_appointments()
     return render_template("admin_dashboard.html",usern=name,doctor_list=doctor_list,patient_list=patient_list,appointments_list=appoin,pop_up="")
 @app.route("/user/<u_id>")
 def user_dashboard(u_id):
@@ -88,8 +87,38 @@ def admin_add_doctor():
         new_user=Doctor_Info(full_name=f_name,email=uname,password=pwd,dept_id=dept_id,experience=experience,bio=bio)
         db.session.add(new_user)
         db.session.commit()
-        return render_template("admin_dashboard.html",usern=a_n(),doctor_list=all_doctor(),patient_list=all_user(),appointments_list=all_appointments(),pop_up="Doctor has added....")
+        return redirect(url_for("admin_dashboard",name=a_n(),pop_up="Doctor has updated...."))
     return render_template("admin_add_doctor.html",pop_up="",usern=a_n(),department_list=dept)
+
+
+@app.route("/admin_doc_update/<d_id>", methods=["GET", "POST"])
+def admin_doc_update(d_id):
+    dept=all_departments()
+    doc=Doctor_Info.query.filter_by(id=d_id).first()
+    if request.method=="POST":
+        f_name=request.form.get("full_name")
+        uname=request.form.get("email")
+        pwd=request.form.get("password")
+        dept_id=request.form.get("specialization_id")
+        exp=request.form.get("experience")
+        bio=request.form.get("bio")
+        usr=Doctor_Info.query.filter(Doctor_Info.email==uname,Doctor_Info.id!=d_id).first()
+        if usr:
+            return render_template("admin_update_doct.html",pop_up="This doctor already exists... Try different email id",usern=a_n(),department_list=dept,doc=doc)
+        elif not (f_name and uname and pwd and dept_id and exp and bio):
+            return render_template("admin_update_doct.html",pop_up="Please! Enter all details of this doctor.",usern=a_n(),department_list=dept,doc=doc)
+        
+        doc.full_name=f_name
+        doc.email=uname
+        doc.password=pwd
+        doc.dept_id=dept_id
+        doc.experience=exp
+        doc.bio=bio
+        
+        db.session.commit()
+        return redirect(url_for("admin_dashboard",name=a_n(),pop_up="Doctor has added...."))
+    return render_template("admin_update_doct.html",pop_up="",usern=a_n(),department_list=dept,doc=doc)
+
 
 @app.route("/admin_department")
 def admin_department():
@@ -111,6 +140,7 @@ def add_department():
         db.session.commit()
         return render_template("admin_department.html",pop_up="New department has addded",usern=a_n(),department_list=all_departments())
     return render_template("admin_add_department.html",pop_up="")
+
 
 @app.route("/department_details/<u_id>/<d_id>")
 def department_details(u_id,d_id):
@@ -169,7 +199,7 @@ def appointment_form(doc_id,u_id):
         for a in appoin_check:
             if a.date==appoin_date and a.time_slot==appoin_timeSlot:
                 return render_template("user_appointment.html",count=count1,avail_list=list,doc_id=doc_id,u_id=u_id, pop_up="You Have Already An Appointment On This Slot!")
-        user_appoin = Appointments(user_id=u_id,doctor_id=doc_id,date=appoin_date,time_slot=appoin_timeSlot,vist_type=visit_type)#there is typo in this model visit
+        user_appoin = Appointments(user_id=u_id,doctor_id=doc_id,date=appoin_date,time_slot=appoin_timeSlot,visit_type=visit_type)
         db.session.add(user_appoin)
         db.session.commit()
         return redirect(url_for("user_dashboard",u_id=u_id))
@@ -208,7 +238,6 @@ def user_hist(u_id):
     u_id=int(u_id)
     name=u_get(u_id,"name","user")
     p_h=Appointments.query.filter_by(user_id=u_id).all()
-    print("_______________",p_h,type(u_id),u_id)
     return render_template("user_history.html",usern=name,history_list=p_h,u_id=u_id)
 
 @app.route("/edit_user_profile/<u_id>",methods=["GET", "POST"])
@@ -232,7 +261,6 @@ def edit_user_profile(u_id):
 
 @app.route("/user_appoin_cancel/<appoin_id>/<u_id>")
 def user_appoin_cancel(appoin_id,u_id):
-    print("____________",request.method,appoin_id)
     ap = Appointments.query.filter_by(id=appoin_id).first()
     if ap:
         ap.status="Appointment is cancelled!"
@@ -244,7 +272,6 @@ def user_appoin_cancel(appoin_id,u_id):
 @app.route("/doc_appoin_status/<appoin_id>/<d_id>/<msg>")
 def doc_appoin_status(appoin_id,d_id,msg):
     msg=str(msg)
-    print("____________",request.method,appoin_id)
     ap = Appointments.query.filter_by(id=appoin_id).first()
     if ap:
         ap.status=msg
@@ -369,9 +396,8 @@ def all_departments():
 
 # search functions
 def a_searchbar(s_txt):
-    today=date.today()
-    appointment=Appointments.query.join(Doctor_Info, Doctor_Info.id==Appointments.doctor_id).join(Department, Department.id==Doctor_Info.dept_id).join(User_Info, User_Info.id==Appointments.user_id).filter(or_(Department.specialization.ilike(f"%{s_txt}%"),Doctor_Info.full_name.ilike(f"%{s_txt}%"),User_Info.full_name.ilike(f"%{s_txt}%")), Appointments.date>=today).all()
-    user=User_Info.query.filter(User_Info.full_name.ilike(f"%{s_txt}%")).all()
+    appointment=Appointments.query.join(Doctor_Info, Doctor_Info.id==Appointments.doctor_id).join(Department, Department.id==Doctor_Info.dept_id).join(User_Info, User_Info.id==Appointments.user_id).filter(or_(Department.specialization.ilike(f"%{s_txt}%"),Doctor_Info.full_name.ilike(f"%{s_txt}%"),User_Info.full_name.ilike(f"%{s_txt}%"))).all()
+    user=User_Info.query.filter(or_(User_Info.full_name.ilike(f"%{s_txt}%"),User_Info.id.ilike(f"%{s_txt}%"))).all()
     doctor=Doctor_Info.query.join(Department, Department.id==Doctor_Info.dept_id).filter(or_(Doctor_Info.full_name.ilike(f"%{s_txt}%"),Department.specialization.ilike(f"%{s_txt}%"))).all()
     return doctor, user,appointment
 

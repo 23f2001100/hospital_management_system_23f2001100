@@ -43,7 +43,7 @@ class Appointments(db.Model):
     doctor_id=db.Column(db.Integer,db.ForeignKey("doctor_info.id"),nullable=False)
     date=db.Column(db.Date,nullable=False)
     time_slot=db.Column(db.String,nullable=False)
-    vist_type=db.Column(db.String,nullable=True)#please correct typo vist-> visit
+    visit_type=db.Column(db.String,nullable=True)
     status=db.Column (db.String,nullable=False,default="Incomplete")
     diagnosis=db.Column(db.String,nullable=True)
     prescription=db.Column(db.String,nullable=True)

@@ -23,7 +23,7 @@
                     <td>{{doctor.id}}</td>
                     <td>{{doctor.full_name}}</td>
                     <td>{{doctor.department.specialization}}</td>
-                    <td><a href="#">Edit</a>  |  <a href="/delete_person/{{doctor.id}}/{{'doctor'}}">Delete</a>  |  {%if doctor.is_blacklist==1%}<a href="/unblock_p/{{doctor.id}}/{{'doctor'}}">Unblock</a>{%else%}<a href="/block_p/{{doctor.id}}/{{'doctor'}}">Blacklist</a>{%endif%}</td>
+                    <td><a href="/admin_doc_update/{{doctor.id}}">Edit</a>  |  <a href="/delete_person/{{doctor.id}}/{{'doctor'}}">Delete</a>  |  {%if doctor.is_blacklist==1%}<a href="/unblock_p/{{doctor.id}}/{{'doctor'}}">Unblock</a>{%else%}<a href="/block_p/{{doctor.id}}/{{'doctor'}}">Blacklist</a>{%endif%}</td>
                 </tr>
                 {%endfor%}
             </tbody>
@@ -63,7 +63,7 @@
     </div>
     <br>
     <hr style="border: 1px solid black; width: 100%; margin: 0px;">
-    <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(123,44,191);padding: 3px; color: rgb(90,24,154); border-radius: 5px; ">Upcoming Appointments</h2>
+    <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(123,44,191);padding: 3px; color: rgb(90,24,154); border-radius: 5px; ">All Appointments</h2>
     <div class="login_panel" style="width: 80%; margin-left: 10%; border: 2px solid rgb(123,44,191)">
         {%if appointments_list%}
         <table class="table_user_dashboard">
