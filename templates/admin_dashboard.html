@@ -1,5 +1,11 @@
 {%extends "admin_layout.html"%}
 {%block content%}
+            <span class="nav_a" style="position: absolute; right: 10px;">
+                <form action="/admin_search_bar/{{usern}}" method="POST">
+                    <input type="text" id="search_by_name" name="search_by_name" placeholder="Search here!">
+                    <button type="submit">Search</button>
+                </form>
+            </span>
     <h1 style="text-align: center; font-weight: bold; padding: 3px; color: rgba(60,9,108,0.9);">Admin Dashboard</h1>
     <h2 style="text-align: center; font-weight: bold; border: 2px solid rgb(123,44,191);padding: 3px; color: rgb(90,24,154); border-radius: 5px; ">Detail Of Doctors</h2>
     <div class="login_panel" style="width: 80%; margin-left: 10%; border: 2px solid rgb(123,44,191)">
@@ -17,7 +23,7 @@
                     <td>{{doctor.id}}</td>
                     <td>{{doctor.full_name}}</td>
                     <td>{{doctor.department.specialization}}</td>
-                    <td><a href="user_relased_spot.html">Edit</a>  |  <a href="user_relased_spot.html">Delete</a>  |  {%if doctor.is_blacklist==1%}<a href="/unblock_p/{{doctor.id}}/{{'doctor'}}">Unblock</a>{%else%}<a href="/block_p/{{doctor.id}}/{{'doctor'}}">Blacklist</a>{%endif%}</td>
+                    <td><a href="#">Edit</a>  |  <a href="/delete_person/{{doctor.id}}/{{'doctor'}}">Delete</a>  |  {%if doctor.is_blacklist==1%}<a href="/unblock_p/{{doctor.id}}/{{'doctor'}}">Unblock</a>{%else%}<a href="/block_p/{{doctor.id}}/{{'doctor'}}">Blacklist</a>{%endif%}</td>
                 </tr>
                 {%endfor%}
             </tbody>
@@ -46,7 +52,7 @@
                 <tr>
                     <td>{{user.id}}</td>
                     <td>{{user.full_name}}</td>
-                    <td><a href="user_relased_spot.html">Delete</a>  |  {%if user.is_blacklist==1%}<a href="/unblock_p/{{user.id}}/{{'user'}}">Unblock</a>{%else%}<a href="/block_p/{{user.id}}/{{'user'}}">Blacklist</a>{%endif%}</td>
+                    <td><a href="/delete_person/{{user.id}}/{{'user'}}">Delete</a>  |  {%if user.is_blacklist==1%}<a href="/unblock_p/{{user.id}}/{{'user'}}">Unblock</a>{%else%}<a href="/block_p/{{user.id}}/{{'user'}}">Blacklist</a>{%endif%}</td>
                 </tr>
                 {%endfor%}
             </tbody>
@@ -65,7 +71,7 @@
                 <th>App_ID</th>
                 <th>Pateint Name</th>
                 <th>Doctor Name</th>
-                <th>Specialization</th>
+                <th>Department</th>
                 <th>Patient History</th>
             </thead>
             <tbody>
@@ -73,8 +79,8 @@
                 <tr>
                     <td>{{appointment.id}}</td>
                     <td>{{appointment.user_info.full_name}}</td>
-                    <td>{{appointment.doctor_id}}</td>
-                    <td>{{appointment.doctor_info.specialization}}</td>
+                    <td>{{appointment.doctor_info.full_name}}</td>
+                    <td>{{appointment.doctor_info.department.specialization}}</td>
                     <td><a href="/admin_user_hist/{{appointment.user_id}}/{{appointment.doctor_id}}" type="button" style="background-color: rgb(90,24,154);">View</a></td>
                 </tr>
                 {%endfor%}

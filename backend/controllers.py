@@ -273,14 +273,34 @@ def unblock_p(person_id,who_p):
         db.session.commit()
     return redirect(url_for("admin_dashboard",name=a_n()))
 
+@app.route("/delete_person/<p_id>/<opertion>")
+def delete_person(p_id,opertion):
+    if opertion=="user":
+        u=User_Info.query.filter_by(id=p_id).first()
+    elif opertion=="doctor":
+        u=Doctor_Info.query.filter_by(id=p_id).first()
+    if u:
+        db.session.delete(u)
+        db.session.commit()
+    return redirect(url_for("admin_dashboard",name=a_n()))
+
 #search routers 
+@app.route("/admin_search_bar/<name>",methods=["GET", "POST"])
+def admin_search_bar(name):
+    if request.method=="POST":
+        s_txt=request.form.get("search_by_name")
+        doctor_list, patient_list,appoin=a_searchbar(s_txt)
+        if doctor_list or patient_list or appoin:
+            return render_template("admin_dashboard.html",usern=name,doctor_list=doctor_list,patient_list=patient_list,appointments_list=appoin,pop_up="")
+    return redirect(url_for("admin_dashboard",name=a_n()))
+
+
 @app.route("/user_dashboard_search_bar/<u_id>",methods=["GET", "POST"])
 def user_dashboard_search_bar(u_id):
     #today=date.today()
     u_id = int(u_id)
     name=u_get(u_id,"name","user")
     usr=User_Info.query.filter_by(id=u_id).first()
-    dept=all_departments()
     #appoin=Appointments.query.filter(Appointments.user_id==u_id, Appointments.date>=today).all()
     if request.method=="POST":
         s_text=request.form.get("search_by_name")
@@ -348,6 +368,14 @@ def all_departments():
 
 
 # search functions
+def a_searchbar(s_txt):
+    today=date.today()
+    appointment=Appointments.query.join(Doctor_Info, Doctor_Info.id==Appointments.doctor_id).join(Department, Department.id==Doctor_Info.dept_id).join(User_Info, User_Info.id==Appointments.user_id).filter(or_(Department.specialization.ilike(f"%{s_txt}%"),Doctor_Info.full_name.ilike(f"%{s_txt}%"),User_Info.full_name.ilike(f"%{s_txt}%")), Appointments.date>=today).all()
+    user=User_Info.query.filter(User_Info.full_name.ilike(f"%{s_txt}%")).all()
+    doctor=Doctor_Info.query.join(Department, Department.id==Doctor_Info.dept_id).filter(or_(Doctor_Info.full_name.ilike(f"%{s_txt}%"),Department.specialization.ilike(f"%{s_txt}%"))).all()
+    return doctor, user,appointment
+
+
 def search_department(s_text,u_id):
     today=date.today()
     dept_name=Department.query.filter(Department.specialization.ilike(f"%{s_text}%")).all()
